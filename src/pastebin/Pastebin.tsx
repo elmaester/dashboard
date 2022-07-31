@@ -6,11 +6,7 @@ import SnippetType from "../types/Snippet";
 
 const Pastebin = () => {
   const [text, setText] = React.useState("");
-  const [snippets, _setSnippets] = React.useState([] as SnippetType[]);
-
-  function setSnippets(snippets: SnippetType[]) {
-    _setSnippets(snippets.sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1)));
-  }
+  const [snippets, setSnippets] = React.useState([] as SnippetType[]);
 
   async function UIsaveSnippet() {
     await createOneSnippet(text);
