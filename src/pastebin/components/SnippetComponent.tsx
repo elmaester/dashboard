@@ -1,7 +1,6 @@
 import { useState } from "react";
 import SnippetType from "../../types/Snippet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import updateOneSnippet from "../functions/updateOneSnippet";
 import deleteOneSnippet from "../functions/deleteOneSnippet";
 
@@ -45,7 +44,7 @@ const SnippetComponent = ({ snippet }: Props) => {
           }}
           onClick={() => !editing && setEditing(true)}
         >
-          <FontAwesomeIcon icon={faPenToSquare} />
+          <FontAwesomeIcon icon="pen-to-square" />
         </button>
         <button
           className="delete is-small ml-3 has-background-danger"
