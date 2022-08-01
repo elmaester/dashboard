@@ -10,13 +10,13 @@ interface Props {
 }
 
 const SnippetComponent = ({ snippet }: Props) => {
-  const { createdAt } = snippet;
+  const { createdAt, text } = snippet;
   const dateString = `${new Date(createdAt).toLocaleDateString()} ${new Date(
     createdAt
   ).toLocaleTimeString()}`;
   const [showAll, setShowAll] = useState(false);
   const [editing, setEditing] = useState(false);
-  const [newText, setNewText] = useState(snippet.text);
+  const [newText, setNewText] = useState(text);
 
   function UIupdateSnippet() {
     updateOneSnippet(snippet.id, newText);
@@ -26,7 +26,7 @@ const SnippetComponent = ({ snippet }: Props) => {
     if (editing) {
       setEditing(false);
     }
-    setNewText(snippet.text);
+    setNewText(text);
   }
   return (
     <div className="card m-2">
@@ -72,10 +72,8 @@ const SnippetComponent = ({ snippet }: Props) => {
           className="card-content has-text-left"
           style={{ whiteSpace: "pre-wrap" }}
         >
-          {showAll || snippet.text.length < 500
-            ? snippet.text
-            : snippet.text.slice(0, 500) + "..."}
-          {snippet.text.length > 500 && (
+          {showAll || text.length < 500 ? text : text.slice(0, 500) + "..."}
+          {text.length > 500 && (
             <p
               className="has-text-right has-text-info has-text-weight-semibold"
               style={{ cursor: "pointer" }}
