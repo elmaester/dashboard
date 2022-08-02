@@ -1,7 +1,7 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { Streak } from "../../types/Streak";
+import { Streak, StreakType } from "../../types/Streak";
 import addNewDoneTime from "../functions/addNewDoneTime";
 import getTimeSinceLast from "../functions/getTimeSinceLast";
 
@@ -38,8 +38,13 @@ const StreakComponent = ({ streak }: Props) => {
               : ""
           }`}
         >
-          {timeSinceLast}
-          {!!target && `/${target}d`}
+          {!!target &&
+            streak.type === StreakType.Cooldown &&
+            `${timeSinceLast}/${target}`}
+          {!!target &&
+            streak.type === StreakType.Reps &&
+            `${done.length}/${target}`}
+          {!target && timeSinceLast}
         </span>
       )}
     </li>
