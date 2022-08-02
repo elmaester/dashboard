@@ -1,6 +1,8 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import { Streak } from "../../types/Streak";
+import addNewDoneTime from "../functions/addNewDoneTime";
 import getTimeSinceLast from "../functions/getTimeSinceLast";
 
 interface Props {
@@ -9,12 +11,20 @@ interface Props {
 
 const StreakComponent = ({ streak }: Props) => {
   const { name, icon, done, target } = streak;
-  const timeSinceLast = getTimeSinceLast(done);
+  const timeSinceLast = !!done.length ? getTimeSinceLast(done) : null;
+  const [hoveringOnIcon, setHoveringOnIcon] = useState(false);
   return (
     <li className="is-flex is-align-items-center py-2">
-      <FontAwesomeIcon className="icon mr-3" icon={icon as IconProp} />
+      <FontAwesomeIcon
+        onClick={() => addNewDoneTime(streak, Date.now())}
+        onMouseEnter={() => setHoveringOnIcon(true)}
+        onMouseLeave={() => setHoveringOnIcon(false)}
+        className={`icon mr-3${hoveringOnIcon ? " has-text-danger" : ""}`}
+        style={{ cursor: "pointer" }}
+        icon={icon as IconProp}
+      />
       <span>{name}</span>
-      {!!done.length && (
+      {!!timeSinceLast && (
         <span
           className={`ml-auto${
             !!target &&
