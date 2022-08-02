@@ -17,7 +17,8 @@
     "parse": "^3.4.3",
     "pretty-ms": "^8.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
     "@types/parse": "^2.18.16",
