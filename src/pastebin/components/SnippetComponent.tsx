@@ -65,6 +65,7 @@ const SnippetComponent = ({ snippet }: Props) => {
           }
           onChange={(e) => setNewText(e.target.value)}
           onKeyDown={(e) => e.ctrlKey && e.key === "Enter" && UIupdateSnippet()}
+          onDoubleClick={() => UIupdateSnippet()}
         />
       ) : (
         <div
