@@ -18,6 +18,7 @@ import {
   faHardDrive,
   faHeadset,
   faHeadSideMask,
+  faIceCream,
   faMagnifyingGlass,
   faMicrophone,
   faNewspaper,
@@ -60,7 +61,8 @@ library.add(
   faShirt,
   faTrash,
   faBottleWater,
-  faPenToSquare
+  faPenToSquare,
+  faIceCream
 );
 
 Parse.initialize(
