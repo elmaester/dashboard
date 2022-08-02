@@ -10,7 +10,7 @@ const StreakBoard = () => {
   }, []);
   return (
     <div className="container mt-6">
-      {Object.keys(streaks).length && (
+      {!!Object.keys(streaks).length && (
         <div className="columns">
           <StreakTypeComponent name="Track when I..." streakType={streaks.log} />
           <StreakTypeComponent name="Do this regularly" streakType={streaks.cooldown} />

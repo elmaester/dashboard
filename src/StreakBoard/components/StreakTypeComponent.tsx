@@ -14,7 +14,7 @@ const StreakTypeComponent = ({ name, streakType }: Props) => (
           {name[0].toUpperCase() + name.slice(1)}
         </h2>
       </div>
-      <ul className="card-content mx-auto" style={{maxWidth: "fit-content"}}>
+      <ul className="card-content mx-auto">
         {streakType.map((streak: Streak) => (
           <StreakComponent key={streak.id} streak={streak} />
         ))}
