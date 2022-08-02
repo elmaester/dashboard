@@ -30,6 +30,7 @@ const Pastebin = () => {
         value={text}
         onChange={(e) => setText(e.target.value)}
         onKeyDown={(e) => e.ctrlKey && e.key === "Enter" && UIsaveSnippet()}
+        onDoubleClick={() => UIsaveSnippet()}
       ></textarea>
       <div className="mt-4">
         {snippets.map((snip: SnippetType) => (
