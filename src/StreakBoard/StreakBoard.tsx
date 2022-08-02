@@ -12,10 +12,22 @@ const StreakBoard = () => {
     <div className="container mt-6">
       {!!Object.keys(streaks).length && (
         <div className="columns">
-          <StreakTypeComponent name="Track when I..." streakType={streaks.log} />
-          <StreakTypeComponent name="Do this regularly" streakType={streaks.cooldown} />
-          <StreakTypeComponent name="Practice X times" streakType={streaks.reps} />
-          <StreakTypeComponent name="Abstain from" streakType={streaks.abstain} />
+          <StreakTypeComponent
+            name="Track when I..."
+            streakType={streaks.log}
+          />
+          <StreakTypeComponent
+            name="Do this regularly"
+            streakType={streaks.cooldown}
+          />
+          <StreakTypeComponent
+            name="Practice X times"
+            streakType={streaks.reps}
+          />
+          <StreakTypeComponent
+            name="Abstain from"
+            streakType={streaks.abstain}
+          />
         </div>
       )}
     </div>

@@ -17,26 +17,24 @@ const Pastebin = () => {
     fetchAllSnippets(setSnippets);
   }, []);
   return (
-    <div className="has-background-light" style={{ minHeight: "945px" }}>
-      <div
-        className="container has-text-centered p-6"
-        style={{ maxWidth: "800px" }}
-      >
-        <h1 className="title">Add new snippet to pastebin</h1>
-        <textarea
-          className="textarea block"
-          name="snippet-input"
-          id="snippet-input"
-          rows={10}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => e.ctrlKey && e.key === "Enter" && UIsaveSnippet()}
-        ></textarea>
-        <div className="mt-4">
-          {snippets.map((snip: SnippetType) => (
-            <SnippetComponent key={snip.id} snippet={snip} />
-          ))}
-        </div>
+    <div
+      className="container has-text-centered p-6"
+      style={{ maxWidth: "800px" }}
+    >
+      <h1 className="title">Add new snippet to pastebin</h1>
+      <textarea
+        className="textarea block"
+        name="snippet-input"
+        id="snippet-input"
+        rows={10}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        onKeyDown={(e) => e.ctrlKey && e.key === "Enter" && UIsaveSnippet()}
+      ></textarea>
+      <div className="mt-4">
+        {snippets.map((snip: SnippetType) => (
+          <SnippetComponent key={snip.id} snippet={snip} />
+        ))}
       </div>
     </div>
   );

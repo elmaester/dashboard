@@ -33,6 +33,8 @@ import {
   faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "./Navbar";
+import Login from "./authentication/Login";
+import RequireAuth from "./authentication/RequireAuth";
 
 library.add(
   faTrophy,
@@ -70,11 +72,28 @@ Parse.serverURL = import.meta.env.VITE_PARSE_SERVER_URL;
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-    <Navbar />
-      <Routes>
-        <Route path="/pastebin" element={<Pastebin />} />
-        <Route path="/streakboard" element={<StreakBoard />} />
-      </Routes>
+      <>
+        <Navbar />
+        <Routes>
+          <Route
+            path="/pastebin"
+            element={
+              <RequireAuth>
+                <Pastebin />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/streakboard"
+            element={
+              <RequireAuth>
+                <StreakBoard />
+              </RequireAuth>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </>
     </BrowserRouter>
   </React.StrictMode>
 );
