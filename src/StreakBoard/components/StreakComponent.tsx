@@ -7,9 +7,10 @@ import getTimeSinceLast from "../functions/getTimeSinceLast";
 
 interface Props {
   streak: Streak;
+  chooseStreak: Function;
 }
 
-const StreakComponent = ({ streak }: Props) => {
+const StreakComponent = ({ streak, chooseStreak }: Props) => {
   const { name, icon, done, target } = streak;
   const timeSinceLast = !!done.length ? getTimeSinceLast(done) : null;
   const [hoveringOnIcon, setHoveringOnIcon] = useState(false);
@@ -23,7 +24,9 @@ const StreakComponent = ({ streak }: Props) => {
         style={{ cursor: "pointer" }}
         icon={icon as IconProp}
       />
-      <span>{name}</span>
+      <span onClick={() => chooseStreak(streak)} style={{ cursor: "pointer" }}>
+        {name}
+      </span>
       {!!timeSinceLast && (
         <span
           className={`ml-auto${
