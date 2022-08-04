@@ -10,9 +10,10 @@ interface Props {
 
 const SnippetComponent = ({ snippet }: Props) => {
   const { createdAt, text } = snippet;
-  const dateString = `${new Date(createdAt).toLocaleDateString()} ${new Date(
-    createdAt
-  ).toLocaleTimeString()}`;
+  const dateString = `${new Intl.DateTimeFormat("en-US", {
+    dateStyle: "long",
+    timeStyle: "medium",
+  }).format(new Date(createdAt))}`;
   const [showAll, setShowAll] = useState(false);
   const [editing, setEditing] = useState(false);
   const [newText, setNewText] = useState(text);
@@ -70,7 +71,7 @@ const SnippetComponent = ({ snippet }: Props) => {
       ) : (
         <div
           className="card-content has-text-left"
-          style={{ whiteSpace: "pre-wrap" }}
+          style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
         >
           {showAll || text.length < 500 ? text : text.slice(0, 500) + "..."}
           {text.length > 500 && (

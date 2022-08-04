@@ -12,7 +12,7 @@ const Navbar = () => {
   const navItems = ["pastebin", "streakboard"];
   return ownerIsLoggedIn() ? (
     <div className="container mt-1">
-      <div className="tabs is-boxed is-large">
+      <div className="tabs is-boxed">
         <ul>
           {navItems.map((item) => (
             <li
@@ -25,7 +25,7 @@ const Navbar = () => {
             </li>
           ))}
           <button
-            className="button is-large is-light is-danger ml-auto mr-1"
+            className="button is-light is-danger ml-auto mr-1"
             onClick={logOut}
           >
             Log Out
