@@ -1,9 +1,11 @@
+import prettyMilliseconds from "pretty-ms";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { Streak } from "../../types/Streak";
+import { Streak, StreakType } from "../../types/Streak";
 import arraysAreIdentical from "../functions/arraysAreIdentical";
 import updateStreak from "../functions/updateStreak";
+import getTimeSinceLast from "../functions/getTimeSinceLast";
 
 interface Props {
   streak: Streak | null;
@@ -47,23 +49,55 @@ const StreakDetails = ({ streak, chooseStreak }: Props) => {
               icon={streak.icon as IconProp}
             />
           </div>
-          <span>Target: </span>
-          <input
-            type="number"
-            className="input"
-            name="target"
-            id="target"
-            min={1}
-            value={streakTarget}
-            onChange={(e) => {
-              const val = e.target.value;
-              if (val === "") {
-                setStreakTarget(1);
-              } else {
-                setStreakTarget(parseInt(val));
-              }
-            }}
-          />
+          {(streakType === StreakType.Cooldown ||
+            streakType === StreakType.Reps) && (
+            <div>
+              <span>Target: </span>
+              <input
+                type="number"
+                className="input"
+                name="target"
+                id="target"
+                min={1}
+                value={streakTarget}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === "") {
+                    setStreakTarget(1);
+                  } else {
+                    setStreakTarget(parseInt(val));
+                  }
+                }}
+              />
+            </div>
+          )}
+          <div className="box mt-5">
+            {streakDone
+              .map((date, index) => (
+                <div key={date}>
+                  {
+                    <p
+                      className="pl-2 ml-2 my-2"
+                      style={{ borderLeft: "3px solid hsl(207, 61%,  53%)" }}
+                    >
+                      {prettyMilliseconds(
+                        !!streakDone[index + 1]
+                          ? streakDone[index + 1] - streakDone[index]
+                          : Date.now() - streakDone[streakDone.length - 1],
+                        { unitCount: 2 }
+                      )}
+                    </p>
+                  }
+                  <p>
+                    {new Intl.DateTimeFormat("en-US", {
+                      dateStyle: "long",
+                      timeStyle: "medium",
+                    }).format(new Date(date))}
+                  </p>
+                </div>
+              ))
+              .reverse()}
+          </div>
         </section>
         <footer className="modal-card-foot">
           <button
