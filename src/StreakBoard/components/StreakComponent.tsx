@@ -33,11 +33,11 @@ const StreakComponent = ({ streak, chooseStreak }: Props) => {
             !!target &&
             timeSinceLast.includes("d") &&
             parseInt(timeSinceLast) > target
-              ? " has-text-danger"
+              ? " has-text-danger has-background-light has-text-weight-bold"
               : !!target &&
                 target - parseInt(timeSinceLast) < 2 &&
                 timeSinceLast.includes("d")
-              ? " has-text-warning-dark"
+              ? " has-background-warning has-text-weight-bold"
               : ""
           }`}
         >
