@@ -28,6 +28,7 @@ import {
   faShirt,
   faShoePrints,
   faShower,
+  faSpa,
   faTrash,
   faTrophy,
   faTv,
@@ -62,7 +63,8 @@ library.add(
   faTrash,
   faBottleWater,
   faPenToSquare,
-  faIceCream
+  faIceCream,
+  faSpa
 );
 
 Parse.initialize(
