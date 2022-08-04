@@ -19,7 +19,9 @@ const SnippetComponent = ({ snippet }: Props) => {
   const [newText, setNewText] = useState(text);
 
   function UIupdateSnippet() {
-    updateOneSnippet(snippet.id, newText);
+    if (text !== newText && !!newText.length) {
+      updateOneSnippet(snippet.id, newText);
+    }
     setEditing(false);
   }
   function handleBlur() {

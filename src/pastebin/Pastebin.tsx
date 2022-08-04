@@ -9,8 +9,10 @@ const Pastebin = () => {
   const [snippets, setSnippets] = React.useState([] as SnippetType[]);
 
   async function UIsaveSnippet() {
-    await createOneSnippet(text);
-    await setText("");
+    if (!!text.length) {
+      await createOneSnippet(text);
+      await setText("");
+    }
   }
 
   React.useEffect(() => {
@@ -18,7 +20,7 @@ const Pastebin = () => {
   }, []);
   return (
     <div
-      className="container has-text-centered p-6"
+      className="container has-text-centered py-6 px-2"
       style={{ maxWidth: "800px" }}
     >
       <h1 className="title">Add new snippet to pastebin</h1>
