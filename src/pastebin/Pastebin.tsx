@@ -1,13 +1,14 @@
-import * as React from "react";
-import fetchAllSnippets from "./functions/fetchAllSnippets";
+import { useState, useEffect } from "react";
+import Parse from "parse";
 import SnippetComponent from "./components/SnippetComponent";
 import SnippetType from "../types/Snippet";
 import createParseObject from "../functions/Parse/createParseObject";
 import ParseCollections from "../types/ParseCollections";
+import subscribeToQuery from "../functions/Parse/subscribeToQuery";
 
 const Pastebin = () => {
-  const [text, setText] = React.useState("");
-  const [snippets, setSnippets] = React.useState([] as SnippetType[]);
+  const [text, setText] = useState("");
+  const [snippets, setSnippets] = useState([] as SnippetType[]);
 
   async function UIsaveSnippet() {
     if (!!text.length) {
@@ -16,8 +17,11 @@ const Pastebin = () => {
     }
   }
 
-  React.useEffect(() => {
-    fetchAllSnippets(setSnippets);
+  const query = new Parse.Query(ParseCollections.Snippet);
+  query.descending("createdAt");
+
+  useEffect(() => {
+    subscribeToQuery(query, setSnippets);
   }, []);
   return (
     <div
