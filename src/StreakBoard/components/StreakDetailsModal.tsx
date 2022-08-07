@@ -110,6 +110,14 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
                       dateStyle: "long",
                       timeStyle: "medium",
                     }).format(new Date(date))}
+                    <button
+                      className="delete ml-3 mt-1 is-small"
+                      onClick={() =>
+                        setStreakDone(
+                          streakDone.filter((_date) => _date !== date)
+                        )
+                      }
+                    />
                   </p>
                 </div>
               ))
