@@ -60,12 +60,14 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
           ></button>
         </header>
         <section className="modal-card-body">
+          {/* icon */}
           <div className="has-text-centered">
             <FontAwesomeIcon
               className={`icon is-large mr-3 mb-6`}
               icon={streak.icon as IconProp}
             />
           </div>
+          {/* edit target */}
           {(streakType === StreakType.Cooldown ||
             streakType === StreakType.Reps) && (
             <div>
@@ -88,29 +90,31 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
               />
             </div>
           )}
+          {/* list done times */}
           {!!streakDone.length && (
             <section className="box mt-5">
               {streakDone
                 .map((date, index) => (
                   <div key={date}>
-                    {
-                      <p
-                        className="pl-2 ml-2 my-2"
-                        style={{ borderLeft: "3px solid hsl(207, 61%,  53%)" }}
-                      >
-                        {prettyMilliseconds(
-                          !!streakDone[index + 1]
-                            ? streakDone[index + 1] - streakDone[index]
-                            : Date.now() - streakDone[streakDone.length - 1],
-                          { unitCount: 2 }
-                        )}
-                      </p>
-                    }
+                    {/* interval between done dates */}
+                    <p
+                      className="pl-2 ml-2 my-2"
+                      style={{ borderLeft: "3px solid hsl(207, 61%,  53%)" }}
+                    >
+                      {prettyMilliseconds(
+                        !!streakDone[index + 1]
+                          ? streakDone[index + 1] - streakDone[index]
+                          : Date.now() - streakDone[streakDone.length - 1],
+                        { unitCount: 2 }
+                      )}
+                    </p>
+                    {/* done date */}
                     <p>
                       {new Intl.DateTimeFormat("en-US", {
                         dateStyle: "long",
                         timeStyle: "medium",
                       }).format(new Date(date))}
+                      {/* deletion button */}
                       <button
                         className="delete ml-3 mt-1 is-small"
                         onClick={() =>
@@ -126,6 +130,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
             </section>
           )}
         </section>
+        {/* footer */}
         <footer className="modal-card-foot">
           <button
             disabled={!Object.keys(getChangeObj()).length}
