@@ -88,41 +88,43 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
               />
             </div>
           )}
-          <div className="box mt-5">
-            {streakDone
-              .map((date, index) => (
-                <div key={date}>
-                  {
-                    <p
-                      className="pl-2 ml-2 my-2"
-                      style={{ borderLeft: "3px solid hsl(207, 61%,  53%)" }}
-                    >
-                      {prettyMilliseconds(
-                        !!streakDone[index + 1]
-                          ? streakDone[index + 1] - streakDone[index]
-                          : Date.now() - streakDone[streakDone.length - 1],
-                        { unitCount: 2 }
-                      )}
+          {!!streakDone.length && (
+            <section className="box mt-5">
+              {streakDone
+                .map((date, index) => (
+                  <div key={date}>
+                    {
+                      <p
+                        className="pl-2 ml-2 my-2"
+                        style={{ borderLeft: "3px solid hsl(207, 61%,  53%)" }}
+                      >
+                        {prettyMilliseconds(
+                          !!streakDone[index + 1]
+                            ? streakDone[index + 1] - streakDone[index]
+                            : Date.now() - streakDone[streakDone.length - 1],
+                          { unitCount: 2 }
+                        )}
+                      </p>
+                    }
+                    <p>
+                      {new Intl.DateTimeFormat("en-US", {
+                        dateStyle: "long",
+                        timeStyle: "medium",
+                      }).format(new Date(date))}
+                      <button
+                        className="delete ml-3 mt-1 is-small"
+                        onClick={() =>
+                          setStreakDone(
+                            streakDone.filter((_date) => _date !== date)
+                          )
+                        }
+                      />
                     </p>
-                  }
-                  <p>
-                    {new Intl.DateTimeFormat("en-US", {
-                      dateStyle: "long",
-                      timeStyle: "medium",
-                    }).format(new Date(date))}
-                    <button
-                      className="delete ml-3 mt-1 is-small"
-                      onClick={() =>
-                        setStreakDone(
-                          streakDone.filter((_date) => _date !== date)
-                        )
-                      }
-                    />
-                  </p>
-                </div>
-              ))
-              .reverse()}
-          </div>
+                  </div>
+                ))
+                .reverse()}
+            </section>
+          )}
         </section>
         <footer className="modal-card-foot">
           <button
