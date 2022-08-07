@@ -1,6 +1,7 @@
-import { SortedStreaksObject, StreakType } from "./../../types/Streak";
 import Parse from "parse";
 import convertParseObjToLocalType from "../../functions/Parse/convertParseObjToLocalType";
+import subscribeToQuery from "../../functions/Parse/subscribeToQuery";
+import ParseCollections from "../../types/ParseCollections";
 
 async function fetchAllStreaks(setStreaks: Function) {
   function refresh(data: any) {
@@ -16,20 +17,10 @@ async function fetchAllStreaks(setStreaks: Function) {
       setStreaks(streaks);
     } else setStreaks([]);
   }
-  const Streak = Parse.Object.extend("Streak");
+  const Streak = Parse.Object.extend(ParseCollections.Streak);
   const query = new Parse.Query(Streak);
   query.ascending("createdAt");
-  refresh(await query.find());
-  const subscription = await query.subscribe();
-  subscription.on("create", async (data) => {
-    refresh(await query.find());
-  });
-  subscription.on("update", async (data) => {
-    refresh(await query.find());
-  });
-  subscription.on("delete", async (data) => {
-    refresh(await query.find());
-  });
+  subscribeToQuery(query, refresh);
 }
 
 export default fetchAllStreaks;

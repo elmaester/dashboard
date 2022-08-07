@@ -1,5 +1,7 @@
 import Parse from "parse";
 import convertParseObjToLocalType from "../../functions/Parse/convertParseObjToLocalType";
+import subscribeToQuery from "../../functions/Parse/subscribeToQuery";
+import ParseCollections from "../../types/ParseCollections";
 import Snippet from "../../types/Snippet";
 
 async function fetchAllSnippets(setSnippets: Function) {
@@ -11,20 +13,10 @@ async function fetchAllSnippets(setSnippets: Function) {
       setSnippets(snippets);
     } else setSnippets([]);
   }
-  const Snippet = Parse.Object.extend("Snippet");
+  const Snippet = Parse.Object.extend(ParseCollections.Snippet);
   const query = new Parse.Query(Snippet);
   query.descending("createdAt");
-  refresh(await query.find());
-  const subscription = await query.subscribe();
-  subscription.on("create", async (data) => {
-    refresh(await query.find());
-  });
-  subscription.on("update", async (data) => {
-    refresh(await query.find());
-  });
-  subscription.on("delete", async (data) => {
-    refresh(await query.find());
-  });
+  subscribeToQuery(query, refresh);
 }
 
 export default fetchAllSnippets;
