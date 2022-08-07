@@ -7,6 +7,7 @@ import doneTimesHaveChanged from "../functions/doneTimesHaveChanged";
 import updateParseObject from "../../functions/Parse/updateParseObject";
 import ParseCollections from "../../types/ParseCollections";
 import subscribeToId from "../../functions/Parse/subscribeToId";
+import DateTimePicker from "react-datetime-picker";
 
 interface Props {
   _streak: Streak;
@@ -21,6 +22,8 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
   const [streakIcon, setStreakIcon] = useState(_streak.icon);
   const [streakTarget, setStreakTarget] = useState(_streak.target);
   const [streakDone, setStreakDone] = useState(_streak.done);
+
+  const [newTime, setNewTime] = useState(new Date());
 
   useEffect(() => {
     subscribeToId(_streak.id, ParseCollections.Streak, setStreak);
@@ -59,7 +62,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
             aria-label="close"
           ></button>
         </header>
-        <section className="modal-card-body">
+        <section className="modal-card-body" style={{ minHeight: "600px" }}>
           {/* icon */}
           <div className="has-text-centered">
             <FontAwesomeIcon
@@ -70,11 +73,11 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
           {/* edit target */}
           {(streakType === StreakType.Cooldown ||
             streakType === StreakType.Reps) && (
-            <div>
+            <div className="is-flex is-align-items-center">
               <span>Target: </span>
               <input
                 type="number"
-                className="input"
+                className="input ml-2"
                 name="target"
                 id="target"
                 min={1}
@@ -90,6 +93,26 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
               />
             </div>
           )}
+          {/* add custom done date */}
+          <div className="is-flex is-align-items-center mt-5">
+            <span>Add new date:</span>
+            <DateTimePicker
+              value={newTime}
+              onChange={setNewTime}
+              clearIcon={null}
+              maxDate={new Date()}
+              format="dd MMM y h:mma"
+              className="ml-2"
+            />
+            <button
+              className="button is-small is-success is-light ml-2"
+              onClick={() =>
+                setStreakDone([...streakDone, newTime.getTime()].sort())
+              }
+            >
+              Add
+            </button>
+          </div>
           {/* list done times */}
           {!!streakDone.length && (
             <section className="box mt-5">
