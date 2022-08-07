@@ -62,7 +62,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
             aria-label="close"
           ></button>
         </header>
-        <section className="modal-card-body" style={{ minHeight: "600px" }}>
+        <section className="modal-card-body" style={{ minHeight: "550px" }}>
           {/* icon */}
           <div className="has-text-centered">
             <FontAwesomeIcon
@@ -94,24 +94,25 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
             </div>
           )}
           {/* add custom done date */}
-          <div className="is-flex is-align-items-center mt-5">
-            <span>Add new date:</span>
-            <DateTimePicker
-              value={newTime}
-              onChange={setNewTime}
-              clearIcon={null}
-              maxDate={new Date()}
-              format="dd MMM y h:mma"
-              className="ml-2"
-            />
-            <button
-              className="button is-small is-success is-light ml-2"
-              onClick={() =>
-                setStreakDone([...streakDone, newTime.getTime()].sort())
-              }
-            >
-              Add
-            </button>
+          <div className="mt-5">
+            <p>Add new date:</p>
+            <div className="mt-1">
+              <DateTimePicker
+                value={newTime}
+                onChange={setNewTime}
+                clearIcon={null}
+                maxDate={new Date()}
+                format="dd MMM y h:mma"
+              />
+              <button
+                className="button is-small is-success is-light ml-2"
+                onClick={() =>
+                  setStreakDone([...streakDone, newTime.getTime()].sort())
+                }
+              >
+                Add
+              </button>
+            </div>
           </div>
           {/* list done times */}
           {!!streakDone.length && (
