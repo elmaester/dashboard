@@ -1,8 +1,9 @@
 import { useState } from "react";
 import SnippetType from "../../types/Snippet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import updateOneSnippet from "../functions/updateOneSnippet";
-import deleteOneSnippet from "../functions/deleteOneSnippet";
+import deleteParseObject from "../../functions/Parse/deleteParseObject";
+import ParseCollections from "../../types/ParseCollections";
+import updateParseObject from "../../functions/Parse/updateParseObject";
 
 interface Props {
   snippet: SnippetType;
@@ -20,7 +21,9 @@ const SnippetComponent = ({ snippet }: Props) => {
 
   function UIupdateSnippet() {
     if (text !== newText && !!newText.length) {
-      updateOneSnippet(snippet.id, newText);
+      updateParseObject(snippet.id, ParseCollections.Snippet, {
+        text: newText,
+      });
     }
     setEditing(false);
   }
@@ -51,12 +54,15 @@ const SnippetComponent = ({ snippet }: Props) => {
         </button>
         <button
           className="delete is-small ml-3 has-background-danger"
-          onClick={() => deleteOneSnippet(snippet.id)}
+          onClick={() =>
+            deleteParseObject(snippet.id, ParseCollections.Snippet)
+          }
         />
       </div>
       {editing ? (
         <textarea
           autoFocus
+          rows={10}
           onBlur={handleBlur}
           className="textarea card-content"
           value={newText}

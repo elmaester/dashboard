@@ -12,6 +12,7 @@ import {
   faBroom,
   faCartShopping,
   faCloudSun,
+  faCommentDots,
   faDumbbell,
   faGamepad,
   faHandSpock,
@@ -19,6 +20,7 @@ import {
   faHeadset,
   faHeadSideMask,
   faIceCream,
+  faLungs,
   faMagnifyingGlass,
   faMicrophone,
   faNewspaper,
@@ -29,6 +31,7 @@ import {
   faShoePrints,
   faShower,
   faSpa,
+  faSpoon,
   faTrash,
   faTrophy,
   faTv,
@@ -64,7 +67,10 @@ library.add(
   faBottleWater,
   faPenToSquare,
   faIceCream,
-  faSpa
+  faSpa,
+  faCommentDots,
+  faSpoon,
+  faLungs
 );
 
 Parse.initialize(

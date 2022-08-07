@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Streak, StreakType } from "../../types/Streak";
 import arraysAreIdentical from "../functions/arraysAreIdentical";
-import updateStreak from "../functions/updateStreak";
+import updateParseObject from "../../functions/Parse/updateParseObject";
 import getTimeSinceLast from "../functions/getTimeSinceLast";
+import ParseCollections from "../../types/ParseCollections";
 
 interface Props {
   streak: Streak | null;
@@ -103,7 +104,13 @@ const StreakDetails = ({ streak, chooseStreak }: Props) => {
           <button
             disabled={!Object.keys(getChangeObj()).length}
             className="button is-success mx-auto"
-            onClick={() => updateStreak(streak.id, getChangeObj())}
+            onClick={() =>
+              updateParseObject(
+                streak.id,
+                ParseCollections.Streak,
+                getChangeObj()
+              )
+            }
           >
             Save changes
           </button>

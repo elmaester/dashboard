@@ -1,8 +1,9 @@
 import * as React from "react";
 import fetchAllSnippets from "./functions/fetchAllSnippets";
-import createOneSnippet from "./functions/createOneSnippet";
 import SnippetComponent from "./components/SnippetComponent";
 import SnippetType from "../types/Snippet";
+import createParseObject from "../functions/Parse/createParseObject";
+import ParseCollections from "../types/ParseCollections";
 
 const Pastebin = () => {
   const [text, setText] = React.useState("");
@@ -10,7 +11,7 @@ const Pastebin = () => {
 
   async function UIsaveSnippet() {
     if (!!text.length) {
-      await createOneSnippet(text);
+      await createParseObject(ParseCollections.Snippet, { text });
       await setText("");
     }
   }
