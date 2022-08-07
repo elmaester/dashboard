@@ -1,17 +1,12 @@
 import Parse from "parse";
+import convertParseObjToLocalType from "../../functions/Parse/convertParseObjToLocalType";
 import Snippet from "../../types/Snippet";
 
 async function fetchAllSnippets(setSnippets: Function) {
-  const parseSnippet = (obj: any) => ({
-    id: obj.id,
-    createdAt: obj.createdAt,
-    updatedAt: obj.updatedAt,
-    text: obj.attributes.text,
-  });
   function refresh(data: any) {
     if (data) {
       const snippets: Snippet[] = Object.values(data).map((obj: any) =>
-        parseSnippet(obj)
+        convertParseObjToLocalType(obj)
       );
       setSnippets(snippets);
     } else setSnippets([]);

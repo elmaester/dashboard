@@ -1,25 +1,18 @@
 import { SortedStreaksObject, StreakType } from "./../../types/Streak";
 import Parse from "parse";
+import convertParseObjToLocalType from "../../functions/Parse/convertParseObjToLocalType";
 
 async function fetchAllStreaks(setStreaks: Function) {
-  const parseStreak = (obj: any) => ({
-    id: obj.id,
-    name: obj.attributes.name,
-    icon: obj.attributes.icon,
-    done: obj.attributes.done,
-    type: obj.attributes.type,
-    target: obj.attributes.target,
-  });
   function refresh(data: any) {
     if (data) {
-      const streaksArray = Object.values(data).map((obj) =>
-        parseStreak(obj)
+      const streaksArray = Object.values(data).map((obj: any) =>
+        convertParseObjToLocalType(obj)
       );
       const streaks: any = {};
       streaksArray.forEach((streak: any) => {
-        if(!streaks[streak.type]) streaks[streak.type] = [];
+        if (!streaks[streak.type]) streaks[streak.type] = [];
         streaks[streak.type].push(streak);
-      })
+      });
       setStreaks(streaks);
     } else setStreaks([]);
   }

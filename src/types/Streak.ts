@@ -7,6 +7,8 @@ export enum StreakType {
 
 export interface Streak {
   id: string;
+  createdAt: Date;
+  updatedAt: Date;
   name: string;
   icon: string;
   done: number[];
