@@ -31,7 +31,9 @@ const StreakBoard = () => {
   }, []);
   return (
     <div className="container mt-6">
-      <StreakDetails streak={chosenStreak} chooseStreak={setChosenStreak} />
+      {!!chosenStreak && (
+        <StreakDetails _streak={chosenStreak} chooseStreak={setChosenStreak} />
+      )}
       {!!Object.keys(streaks).length && (
         <div className="columns">
           <StreakTypeComponent

@@ -1,33 +1,49 @@
 import prettyMilliseconds from "pretty-ms";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Streak, StreakType } from "../../types/Streak";
-import arraysAreIdentical from "../functions/arraysAreIdentical";
+import doneTimesHaveChanged from "../functions/doneTimesHaveChanged";
 import updateParseObject from "../../functions/Parse/updateParseObject";
-import getTimeSinceLast from "../functions/getTimeSinceLast";
 import ParseCollections from "../../types/ParseCollections";
+import subscribeToId from "../../functions/Parse/subscribeToId";
 
 interface Props {
-  streak: Streak | null;
+  _streak: Streak;
   chooseStreak: Function;
 }
 
-const StreakDetails = ({ streak, chooseStreak }: Props) => {
-  if (!streak) return null;
+const StreakDetails = ({ _streak, chooseStreak }: Props) => {
+  const [streak, setStreak] = useState(null as Streak | null);
 
-  const [streakName, setStreakName] = useState(streak.name);
-  const [streakType, setStreakType] = useState(streak.type);
-  const [streakIcon, setStreakIcon] = useState(streak.icon);
-  const [streakTarget, setStreakTarget] = useState(streak.target);
-  const [streakDone, setStreakDone] = useState([...streak.done]);
+  const [streakName, setStreakName] = useState(_streak.name);
+  const [streakType, setStreakType] = useState(_streak.type);
+  const [streakIcon, setStreakIcon] = useState(_streak.icon);
+  const [streakTarget, setStreakTarget] = useState(_streak.target);
+  const [streakDone, setStreakDone] = useState(_streak.done);
+
+  useEffect(() => {
+    subscribeToId(_streak.id, ParseCollections.Streak, setStreak);
+  }, []);
+
+  useEffect(() => {
+    if (!!streak) {
+      setStreakName(streak.name);
+      setStreakType(streak.type);
+      setStreakIcon(streak.icon);
+      setStreakTarget(streak.target);
+      setStreakDone(streak.done);
+    }
+  }, [streak]);
+
+  if (!streak) return null;
   const getChangeObj = () => {
     const changeObj: any = {};
     if (streakName !== streak.name) changeObj.name = streakName;
     if (streakType !== streak.type) changeObj.type = streakType;
     if (streakIcon !== streak.icon) changeObj.icon = streakIcon;
     if (streakTarget !== streak.target) changeObj.target = streakTarget;
-    if (!arraysAreIdentical(streakDone, streak.done))
+    if (doneTimesHaveChanged(streakDone, streak.done))
       changeObj.done = streakDone;
     return changeObj;
   };
