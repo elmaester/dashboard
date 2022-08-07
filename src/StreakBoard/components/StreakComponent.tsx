@@ -1,8 +1,9 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import updateParseObject from "../../functions/Parse/updateParseObject";
+import ParseCollections from "../../types/ParseCollections";
 import { Streak, StreakType } from "../../types/Streak";
-import addNewDoneTime from "../functions/addNewDoneTime";
 import getTimeSinceLast from "../functions/getTimeSinceLast";
 
 interface Props {
@@ -17,7 +18,11 @@ const StreakComponent = ({ streak, chooseStreak }: Props) => {
   return (
     <li className="is-flex is-align-items-center py-2">
       <FontAwesomeIcon
-        onClick={() => addNewDoneTime(streak, Date.now())}
+        onClick={() =>
+          updateParseObject(streak.id, ParseCollections.Streak, {
+            done: [...streak.done, Date.now()].sort(),
+          })
+        }
         onMouseEnter={() => setHoveringOnIcon(true)}
         onMouseLeave={() => setHoveringOnIcon(false)}
         className={`icon mr-3${hoveringOnIcon ? " has-text-danger" : ""}`}
