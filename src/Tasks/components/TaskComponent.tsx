@@ -48,12 +48,14 @@ const TaskComponent = ({ task }: Props) => {
     return className;
   };
   return (
-    <div className="box is-flex">
-      <span className="has-text-weight-bold">{task.description}</span>
-      <span className="ml-1 has-text-grey-light is-hidden-mobile">
-        (created: {task.createdAt.toDateString()})
-      </span>
-      <div className="ml-auto">
+    <div className="box is-flex is-align-items-center">
+      <div className="mr-3">
+        <span className="has-text-weight-bold">{task.description}</span>
+        <span className="ml-1 has-text-grey-light is-hidden-mobile">
+          (created: {task.createdAt.toDateString()})
+        </span>
+      </div>
+      <div className="ml-auto is-flex is-flex-wrap-nowrap">
         <FontAwesomeIcon
           onMouseEnter={() => setHoveringOnCheck(true)}
           onMouseLeave={() => setHoveringOnCheck(false)}
