@@ -52,7 +52,9 @@ const StreakComponent = ({ streak, chooseStreak }: Props) => {
           {!!target &&
             streak.type === StreakType.Reps &&
             `${done.length}/${target}`}
-          {!target && timeSinceLast}
+          {(streak.type === StreakType.Log ||
+            streak.type === StreakType.Abstain) &&
+            timeSinceLast}
         </span>
       )}
     </li>
