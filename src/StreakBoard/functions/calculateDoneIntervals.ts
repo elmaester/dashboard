@@ -30,11 +30,14 @@ export function calculateDoneIntervals(_doneArray: number[]) {
   return doneArray.reverse();
 }
 
-export function calculateAverageInterval(doneArray: number[]) {
+export function calculateAverageInterval(
+  doneArray: number[],
+  unitCount: number
+) {
   const averageInterval = prettyMilliseconds(
     calculateJustIntervals(doneArray).reduce((a, b) => a + b, 0) /
       doneArray.length || 0,
-    { unitCount: 2 }
+    { unitCount }
   );
   return averageInterval;
 }

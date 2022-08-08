@@ -180,7 +180,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
             <label className="label mt-5">
               Average interval:{" "}
               <span className="has-text-weight-normal">
-                {calculateAverageInterval(streakDone)}
+                {calculateAverageInterval(streakDone, 2)}
               </span>
             </label>
           )}
