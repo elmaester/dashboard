@@ -64,38 +64,94 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
         </header>
         <section className="modal-card-body" style={{ minHeight: "550px" }}>
           {/* icon */}
-          <div className="has-text-centered">
-            <FontAwesomeIcon
-              className={`icon is-large mr-3 mb-6`}
-              icon={streak.icon as IconProp}
-            />
+          {!!streakIcon?.length && (
+            <div className="has-text-centered">
+              <FontAwesomeIcon
+                className={`icon is-large mr-3 mb-6`}
+                icon={streak.icon as IconProp}
+              />
+            </div>
+          )}
+          {/* edit name */}
+          <div className="">
+            <label className="label" htmlFor="streakName">
+              Name:
+            </label>
+            <div className="control">
+              <input
+                type="text"
+                className="input"
+                id="streakName"
+                value={streakName}
+                onChange={(e) => setStreakName(e.target.value)}
+              />
+            </div>
+          </div>
+          {/* edit icon */}
+          <div className="mt-3">
+            <label className="label" htmlFor="streakIcon">
+              Icon:
+            </label>
+            <div className="control">
+              <input
+                type="text"
+                className="input"
+                id="streakIcon"
+                value={streakIcon}
+                onChange={(e) => setStreakIcon(e.target.value)}
+              />
+            </div>
+          </div>
+          {/* edit type */}
+          <div className="mt-3">
+            <label className="label" htmlFor="streakType">
+              Type:
+            </label>
+            <div className="control">
+              <div className="select">
+                <select
+                  id="streakType"
+                  value={streakType}
+                  onChange={(e) => setStreakType(e.target.value as StreakType)}
+                >
+                  {Object.values(StreakType).map((type) => (
+                    <option key={type} value={type}>
+                      {type[0].toUpperCase() + type.slice(1)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
           </div>
           {/* edit target */}
           {(streakType === StreakType.Cooldown ||
             streakType === StreakType.Reps) && (
-            <div className="is-flex is-align-items-center">
-              <span>Target: </span>
-              <input
-                type="number"
-                className="input ml-2"
-                name="target"
-                id="target"
-                min={1}
-                value={streakTarget}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  if (val === "") {
-                    setStreakTarget(1);
-                  } else {
-                    setStreakTarget(parseInt(val));
-                  }
-                }}
-              />
+            <div className="mt-3">
+              <label className="label" htmlFor="streakTarget">
+                Target:{" "}
+              </label>
+              <div className="control">
+                <input
+                  type="number"
+                  className="input"
+                  id="streakTarget"
+                  min={1}
+                  value={streakTarget}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === "") {
+                      setStreakTarget(1);
+                    } else {
+                      setStreakTarget(parseInt(val));
+                    }
+                  }}
+                />
+              </div>
             </div>
           )}
           {/* add custom done date */}
-          <div className="mt-5">
-            <p>Add new date:</p>
+          <div className="mt-3">
+            <label className="label">Add new date:</label>
             <div className="mt-1">
               <DateTimePicker
                 value={newTime}
@@ -115,7 +171,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
             </div>
           </div>
           {/* list done times */}
-          {!!streakDone.length && (
+          {!!streakDone?.length && (
             <section className="box mt-5">
               {streakDone
                 .map((date, index) => (
