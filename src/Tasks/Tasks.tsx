@@ -31,25 +31,13 @@ const Tasks = () => {
       style={{ maxWidth: "800px" }}
     >
       <h1 className="title">Add new task</h1>
-      <div className="is-flex">
-        <input
-          type="text"
-          className="input mb-5"
-          autoFocus
-          onFocus={(e) =>
-            e.currentTarget.setSelectionRange(
-              e.currentTarget.value.length,
-              e.currentTarget.value.length
-            )
-          }
-          value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && UIsaveTask()}
-        />
-        <button className="button is-success ml-1" onClick={() => UIsaveTask()}>
-          Add
-        </button>
-      </div>
+      <input
+        type="text"
+        className="input mb-5"
+        value={newTask}
+        onChange={(e) => setNewTask(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && UIsaveTask()}
+      />
       <div className="tabs is-centered is-toggle">
         <ul>
           {Object.values(TaskStatus).map((item) => (

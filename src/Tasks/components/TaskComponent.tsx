@@ -50,7 +50,7 @@ const TaskComponent = ({ task }: Props) => {
   return (
     <div className="box is-flex">
       <span className="has-text-weight-bold">{task.description}</span>
-      <span className="ml-1 has-text-grey-light">
+      <span className="ml-1 has-text-grey-light is-hidden-mobile">
         (created: {task.createdAt.toDateString()})
       </span>
       <div className="ml-auto">
