@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Parse from "parse";
 import subscribeToQuery from "../functions/Parse/subscribeToQuery";
 import ParseCollections from "../types/ParseCollections";
-import { SortedStreaksObject, Streak } from "../types/Streak";
+import { SortedStreaksObject, Streak, StreakType } from "../types/Streak";
 import StreakDetails from "./components/StreakDetailsModal";
 import StreakTypeComponent from "./components/StreakTypeComponent";
 
@@ -38,22 +38,26 @@ const StreakBoard = () => {
         <div className="columns">
           <StreakTypeComponent
             name="Track when I..."
-            streakType={streaks.log}
+            streakTypeArray={streaks.log}
+            streakType={StreakType.Log}
             chooseStreak={setChosenStreak}
           />
           <StreakTypeComponent
             name="Do this regularly"
-            streakType={streaks.cooldown}
+            streakTypeArray={streaks.cooldown}
+            streakType={StreakType.Cooldown}
             chooseStreak={setChosenStreak}
           />
           <StreakTypeComponent
             name="Practice X times"
-            streakType={streaks.reps}
+            streakTypeArray={streaks.reps}
+            streakType={StreakType.Reps}
             chooseStreak={setChosenStreak}
           />
           <StreakTypeComponent
             name="Abstain from"
-            streakType={streaks.abstain}
+            streakTypeArray={streaks.abstain}
+            streakType={StreakType.Abstain}
             chooseStreak={setChosenStreak}
           />
         </div>

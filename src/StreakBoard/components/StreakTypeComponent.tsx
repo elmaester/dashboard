@@ -1,22 +1,36 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Streak } from "../../types/Streak";
+import createParseObject from "../../functions/Parse/createParseObject";
+import ParseCollections from "../../types/ParseCollections";
+import { Streak, StreakType } from "../../types/Streak";
 import StreakComponent from "./StreakComponent";
 
 interface Props {
   name: string;
-  streakType: Streak[];
+  streakTypeArray: Streak[];
+  streakType: StreakType;
   chooseStreak: Function;
 }
 
-const StreakTypeComponent = ({ name, streakType, chooseStreak }: Props) => (
+const StreakTypeComponent = ({
+  name,
+  streakType,
+  streakTypeArray,
+  chooseStreak,
+}: Props) => (
   <div className="column">
     <div className="card">
       <div className="card-header has-background-dark">
         <h2 className="card-header-title has-text-white">
           {name}
           <FontAwesomeIcon
-            onClick={() => {}}
+            onClick={() =>
+              createParseObject(ParseCollections.Streak, {
+                type: streakType,
+                name: "New Streak",
+                icon: "bullseye",
+              })
+            }
             className={`icon ml-auto`}
             style={{ cursor: "pointer" }}
             icon={"plus" as IconProp}
@@ -24,7 +38,7 @@ const StreakTypeComponent = ({ name, streakType, chooseStreak }: Props) => (
         </h2>
       </div>
       <ul className="card-content mx-auto">
-        {streakType.map((streak: Streak) => (
+        {streakTypeArray.map((streak: Streak) => (
           <StreakComponent
             key={streak.id}
             streak={streak}
