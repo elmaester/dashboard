@@ -1,13 +1,5 @@
 import prettyMilliseconds from "pretty-ms";
 
-function calculateJustIntervals(_doneArray: number[]) {
-  return _doneArray.map((date, index) =>
-    !!_doneArray[index + 1]
-      ? _doneArray[index + 1] - _doneArray[index]
-      : Date.now() - _doneArray[_doneArray.length - 1]
-  );
-}
-
 export function calculateDoneIntervals(_doneArray: number[]) {
   const doneArray = _doneArray.map((date, index) => ({
     interval: !!_doneArray[index + 1]
@@ -30,14 +22,13 @@ export function calculateDoneIntervals(_doneArray: number[]) {
   return doneArray.reverse();
 }
 
-export function calculateAverageInterval(
-  doneArray: number[],
-  unitCount: number
-) {
-  const averageInterval = prettyMilliseconds(
-    calculateJustIntervals(doneArray).reduce((a, b) => a + b, 0) /
-      doneArray.length || 0,
-    { unitCount }
+export function calculateAverageInterval(doneArray: number[]) {
+  const allIntervals = doneArray.map((date, index) =>
+    !!doneArray[index + 1]
+      ? doneArray[index + 1] - doneArray[index]
+      : Date.now() - doneArray[doneArray.length - 1]
   );
+  const averageInterval =
+    allIntervals.reduce((a, b) => a + b, 0) / doneArray.length || 0;
   return averageInterval;
 }

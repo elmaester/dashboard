@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import updateParseObject from "../../functions/Parse/updateParseObject";
 import ParseCollections from "../../types/ParseCollections";
-import { Streak, StreakType } from "../../types/Streak";
-import getTimeSinceLast from "../functions/getTimeSinceLast";
+import { Streak } from "../../types/Streak";
+import FrequencyString from "./FrequencyString";
 
 interface Props {
   streak: Streak;
@@ -13,7 +13,6 @@ interface Props {
 
 const StreakComponent = ({ streak, chooseStreak }: Props) => {
   const { name, icon, done, target } = streak;
-  const timeSinceLast = !!done.length ? getTimeSinceLast(done) : null;
   const [hoveringOnIcon, setHoveringOnIcon] = useState(false);
   return (
     <li className="is-flex is-align-items-center py-2">
@@ -32,31 +31,7 @@ const StreakComponent = ({ streak, chooseStreak }: Props) => {
       <span onClick={() => chooseStreak(streak)} style={{ cursor: "pointer" }}>
         {name}
       </span>
-      {!!timeSinceLast && (
-        <span
-          className={`ml-auto${
-            !!target &&
-            timeSinceLast.includes("d") &&
-            parseInt(timeSinceLast) > target
-              ? " has-text-danger has-background-light has-text-weight-bold"
-              : !!target &&
-                target - parseInt(timeSinceLast) < 2 &&
-                timeSinceLast.includes("d")
-              ? " has-background-warning has-text-weight-bold"
-              : ""
-          }`}
-        >
-          {!!target &&
-            streak.type === StreakType.Cooldown &&
-            `${timeSinceLast}/${target}`}
-          {!!target &&
-            streak.type === StreakType.Reps &&
-            `${done.length}/${target}`}
-          {(streak.type === StreakType.Log ||
-            streak.type === StreakType.Abstain) &&
-            timeSinceLast}
-        </span>
-      )}
+      <FrequencyString streak={streak} />
     </li>
   );
 };

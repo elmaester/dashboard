@@ -12,6 +12,7 @@ import {
   calculateAverageInterval,
   calculateDoneIntervals,
 } from "../functions/calculateDoneIntervals";
+import prettyMilliseconds from "pretty-ms";
 
 interface Props {
   _streak: Streak;
@@ -180,7 +181,9 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
             <label className="label mt-5">
               Average interval:{" "}
               <span className="has-text-weight-normal">
-                {calculateAverageInterval(streakDone, 2)}
+                {prettyMilliseconds(calculateAverageInterval(streakDone), {
+                  unitCount: 2,
+                })}
               </span>
             </label>
           )}
