@@ -25,6 +25,7 @@ import {
   faMicrophone,
   faNewspaper,
   faPenToSquare,
+  faPeoplePulling,
   faPeopleRobbery,
   faScissors,
   faShirt,
@@ -70,7 +71,8 @@ library.add(
   faSpa,
   faCommentDots,
   faSpoon,
-  faLungs
+  faLungs,
+  faPeoplePulling
 );
 
 Parse.initialize(
