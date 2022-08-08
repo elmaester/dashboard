@@ -8,6 +8,7 @@ import updateParseObject from "../../functions/Parse/updateParseObject";
 import ParseCollections from "../../types/ParseCollections";
 import subscribeToId from "../../functions/Parse/subscribeToId";
 import DateTimePicker from "react-datetime-picker";
+import deleteParseObject from "../../functions/Parse/deleteParseObject";
 
 interface Props {
   _streak: Streak;
@@ -163,6 +164,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
               <button
                 className="button is-small is-success is-light ml-2"
                 onClick={() =>
+                  !streakDone.includes(newTime.getTime()) &&
                   setStreakDone([...streakDone, newTime.getTime()].sort())
                 }
               >
@@ -224,6 +226,15 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
             }
           >
             Save changes
+          </button>
+          <button
+            className="button is-danger mx-auto"
+            onDoubleClick={() => {
+              deleteParseObject(streak.id, ParseCollections.Streak);
+              chooseStreak(null);
+            }}
+          >
+            Delete streak (double-click)
           </button>
         </footer>
       </div>
