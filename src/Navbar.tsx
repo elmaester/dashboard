@@ -9,7 +9,7 @@ const Navbar = () => {
     await Parse.User.logOut();
     navigate("/login");
   }
-  const navItems = ["pastebin", "streakboard"];
+  const navItems = ["pastebin", "streakboard", "tasks"];
   return ownerIsLoggedIn() ? (
     <div className="container mt-1">
       <div className="tabs is-boxed">

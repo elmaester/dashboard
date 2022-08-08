@@ -12,9 +12,11 @@ import {
   faBroom,
   faBullseye,
   faCartShopping,
+  faCheck,
   faCloudSun,
   faCommentDots,
   faDumbbell,
+  faEyeSlash,
   faGamepad,
   faHandSpock,
   faHardDrive,
@@ -35,6 +37,7 @@ import {
   faShower,
   faSpa,
   faSpoon,
+  faThumbTack,
   faTrash,
   faTrophy,
   faTv,
@@ -43,6 +46,7 @@ import {
 import Navbar from "./Navbar";
 import Login from "./authentication/Login";
 import RequireAuth from "./authentication/RequireAuth";
+import Tasks from "./Tasks/Tasks";
 
 library.add(
   faTrophy,
@@ -76,7 +80,10 @@ library.add(
   faLungs,
   faPeoplePulling,
   faPlus,
-  faBullseye
+  faBullseye,
+  faThumbTack,
+  faEyeSlash,
+  faCheck
 );
 
 Parse.initialize(
@@ -104,6 +111,14 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             element={
               <RequireAuth>
                 <StreakBoard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/tasks"
+            element={
+              <RequireAuth>
+                <Tasks />
               </RequireAuth>
             }
           />
