@@ -1,4 +1,3 @@
-import prettyMilliseconds from "pretty-ms";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
@@ -9,6 +8,10 @@ import ParseCollections from "../../types/ParseCollections";
 import subscribeToId from "../../functions/Parse/subscribeToId";
 import DateTimePicker from "react-datetime-picker";
 import deleteParseObject from "../../functions/Parse/deleteParseObject";
+import {
+  calculateAverageInterval,
+  calculateDoneIntervals,
+} from "../functions/calculateDoneIntervals";
 
 interface Props {
   _streak: Streak;
@@ -172,43 +175,43 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
               </button>
             </div>
           </div>
+          {/* display average interval */}
+          {!!streakDone?.length && (
+            <label className="label mt-5">
+              Average interval:{" "}
+              <span className="has-text-weight-normal">
+                {calculateAverageInterval(streakDone)}
+              </span>
+            </label>
+          )}
           {/* list done times */}
           {!!streakDone?.length && (
             <div className="box mt-5 mb-0">
-              {streakDone
-                .map((date, index) => (
-                  <div key={date}>
-                    {/* interval between done dates */}
-                    <p
-                      className="pl-2 ml-2 my-2"
-                      style={{ borderLeft: "3px solid hsl(207, 61%,  53%)" }}
-                    >
-                      {prettyMilliseconds(
-                        !!streakDone[index + 1]
-                          ? streakDone[index + 1] - streakDone[index]
-                          : Date.now() - streakDone[streakDone.length - 1],
-                        { unitCount: 2 }
-                      )}
-                    </p>
-                    {/* done date */}
-                    <p>
-                      {new Intl.DateTimeFormat("en-US", {
-                        dateStyle: "long",
-                        timeStyle: "medium",
-                      }).format(new Date(date))}
-                      {/* deletion button */}
-                      <button
-                        className="delete ml-3 mt-1 is-small"
-                        onClick={() =>
-                          setStreakDone(
-                            streakDone.filter((_date) => _date !== date)
-                          )
-                        }
-                      />
-                    </p>
-                  </div>
-                ))
-                .reverse()}
+              <p>Now</p>
+              {calculateDoneIntervals(streakDone).map((done) => (
+                <div key={done.date}>
+                  {/* interval between done dates */}
+                  <p
+                    className="pl-2 ml-2 my-2"
+                    style={{ borderLeft: "3px solid hsl(207, 61%,  53%)" }}
+                  >
+                    {done.intervalText}
+                  </p>
+                  {/* done date */}
+                  <p>
+                    {done.dateText}
+                    {/* deletion button */}
+                    <button
+                      className="delete ml-3 mt-1 is-small"
+                      onClick={() =>
+                        setStreakDone(
+                          streakDone.filter((date) => date !== done.date)
+                        )
+                      }
+                    />
+                  </p>
+                </div>
+              ))}
             </div>
           )}
           <div className="is-flex mt-5">
