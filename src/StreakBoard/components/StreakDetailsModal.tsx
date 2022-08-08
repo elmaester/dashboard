@@ -163,8 +163,8 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
               />
               <button
                 className="button is-small is-success is-light ml-2"
+                disabled={streakDone.includes(newTime.getTime())}
                 onClick={() =>
-                  !streakDone.includes(newTime.getTime()) &&
                   setStreakDone([...streakDone, newTime.getTime()].sort())
                 }
               >
@@ -174,7 +174,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
           </div>
           {/* list done times */}
           {!!streakDone?.length && (
-            <section className="box mt-5">
+            <div className="box mt-5 mb-0">
               {streakDone
                 .map((date, index) => (
                   <div key={date}>
@@ -209,8 +209,19 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
                   </div>
                 ))
                 .reverse()}
-            </section>
+            </div>
           )}
+          <div className="is-flex mt-5">
+            <button
+              className="button is-danger mx-auto"
+              onDoubleClick={() => {
+                deleteParseObject(streak.id, ParseCollections.Streak);
+                chooseStreak(null);
+              }}
+            >
+              Delete streak (double-click)
+            </button>
+          </div>
         </section>
         {/* footer */}
         <footer className="modal-card-foot">
@@ -226,15 +237,6 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
             }
           >
             Save changes
-          </button>
-          <button
-            className="button is-danger mx-auto"
-            onDoubleClick={() => {
-              deleteParseObject(streak.id, ParseCollections.Streak);
-              chooseStreak(null);
-            }}
-          >
-            Delete streak (double-click)
           </button>
         </footer>
       </div>
