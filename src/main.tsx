@@ -10,6 +10,7 @@ import {
   faBook,
   faBottleWater,
   faBroom,
+  faBullseye,
   faCartShopping,
   faCloudSun,
   faCommentDots,
@@ -74,7 +75,8 @@ library.add(
   faSpoon,
   faLungs,
   faPeoplePulling,
-  faPlus
+  faPlus,
+  faBullseye
 );
 
 Parse.initialize(
