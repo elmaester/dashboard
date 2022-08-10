@@ -37,6 +37,7 @@ import {
   faShower,
   faSpa,
   faSpoon,
+  faTablets,
   faThumbTack,
   faTrash,
   faTrophy,
@@ -83,7 +84,8 @@ library.add(
   faBullseye,
   faThumbTack,
   faEyeSlash,
-  faCheck
+  faCheck,
+  faTablets
 );
 
 Parse.initialize(
