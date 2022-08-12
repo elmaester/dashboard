@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       manualChunks: {
-        dateTime: ["react-datetime-picker"],
+        dateTime: ["react-datetime-picker", "react-date-picker"],
         fontAwesome: [
           "@fortawesome/fontawesome-svg-core",
           "@fortawesome/free-solid-svg-icons",
