@@ -7,9 +7,10 @@ import { Task, TaskStatus } from "../../types/Task";
 
 interface Props {
   task: Task;
+  chooseTask: Function;
 }
 
-const TaskComponent = ({ task }: Props) => {
+const TaskComponent = ({ task, chooseTask }: Props) => {
   const [hoveringOnPin, setHoveringOnPin] = useState(false);
   const [hoveringOnEye, setHoveringOnEye] = useState(false);
   const [hoveringOnCheck, setHoveringOnCheck] = useState(false);
@@ -50,7 +51,13 @@ const TaskComponent = ({ task }: Props) => {
   return (
     <div className="box is-flex is-align-items-center">
       <div className="mr-3">
-        <span className="has-text-weight-bold">{task.description}</span>
+        <span
+          onClick={() => chooseTask(task)}
+          className="has-text-weight-bold"
+          style={{ cursor: "pointer" }}
+        >
+          {task.description}
+        </span>
         <span className="ml-1 has-text-grey-light is-hidden-mobile">
           (created: {task.createdAt.toDateString()})
         </span>

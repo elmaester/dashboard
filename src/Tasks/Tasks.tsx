@@ -5,11 +5,13 @@ import subscribeToQuery from "../functions/Parse/subscribeToQuery";
 import ParseCollections from "../types/ParseCollections";
 import { Task, TaskStatus } from "../types/Task";
 import TaskComponent from "./components/TaskComponent";
+import TaskDetails from "./components/TaskDetailsModal";
 
 const Tasks = () => {
   const [newTask, setNewTask] = useState("");
   const [activeTab, setActiveTab] = useState(TaskStatus.Active);
   const [tasks, setTasks] = useState([] as Task[]);
+  const [chosenTask, setChosenTask] = useState(null);
 
   const query = new Parse.Query(ParseCollections.Task);
   query.descending(["pinned", "createdAt"]);
@@ -30,6 +32,9 @@ const Tasks = () => {
       className="container mt-6 has-text-centered"
       style={{ maxWidth: "800px" }}
     >
+      {!!chosenTask && (
+        <TaskDetails _task={chosenTask} chooseTask={setChosenTask} />
+      )}
       <h1 className="title">Add new task</h1>
       <input
         type="text"
@@ -54,7 +59,13 @@ const Tasks = () => {
       {!!tasks.length &&
         tasks
           .filter((task) => task.status === activeTab)
-          .map((task) => <TaskComponent task={task} key={task.id} />)}
+          .map((task) => (
+            <TaskComponent
+              task={task}
+              chooseTask={setChosenTask}
+              key={task.id}
+            />
+          ))}
     </div>
   );
 };
