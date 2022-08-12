@@ -52,9 +52,14 @@ const TaskComponent = ({ task, chooseTask }: Props) => {
     <div className="box is-flex is-align-items-center">
       <div className="mr-3">
         <span
-          onClick={() => chooseTask(task)}
+          onClick={() =>
+            task.status !== TaskStatus.Completed && chooseTask(task)
+          }
           className="has-text-weight-bold"
-          style={{ cursor: "pointer" }}
+          style={{
+            cursor:
+              task.status !== TaskStatus.Completed ? "pointer" : "default",
+          }}
         >
           {task.description}
         </span>
@@ -75,6 +80,8 @@ const TaskComponent = ({ task, chooseTask }: Props) => {
                 task.status === TaskStatus.Active
                   ? TaskStatus.Completed
                   : TaskStatus.Active,
+              due: null,
+              snoozeTill: null,
             })
           }
         />
@@ -91,6 +98,8 @@ const TaskComponent = ({ task, chooseTask }: Props) => {
                   task.status === TaskStatus.Active
                     ? TaskStatus.Shelved
                     : TaskStatus.Active,
+                due: null,
+                snoozeTill: null,
               })
             }
           />

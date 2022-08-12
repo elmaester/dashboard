@@ -12,6 +12,7 @@ const Tasks = () => {
   const [activeTab, setActiveTab] = useState(TaskStatus.Active);
   const [tasks, setTasks] = useState([] as Task[]);
   const [chosenTask, setChosenTask] = useState(null);
+  const [showSnoozed, setShowSnoozed] = useState(false);
 
   const query = new Parse.Query(ParseCollections.Task);
   query.descending(["pinned", "createdAt"]);
@@ -56,16 +57,42 @@ const Tasks = () => {
           ))}
         </ul>
       </div>
-      {!!tasks.length &&
-        tasks
-          .filter((task) => task.status === activeTab)
-          .map((task) => (
-            <TaskComponent
-              task={task}
-              chooseTask={setChosenTask}
-              key={task.id}
-            />
-          ))}
+      {!!tasks.length && (
+        <div>
+          {activeTab === TaskStatus.Active && (
+            <div className="is-flex my-6">
+              <input
+                type="checkbox"
+                name="showSnoozed"
+                id="showSnoozed"
+                className="checkbox mr-2"
+                style={{ outline: "none" }}
+                checked={showSnoozed}
+                onChange={() => setShowSnoozed(!showSnoozed)}
+              />
+              <label
+                className="has-color-grey"
+                style={{ cursor: "pointer" }}
+                htmlFor="showSnoozed"
+              >
+                Show snoozed
+              </label>
+            </div>
+          )}
+          {tasks
+            .filter((task) => task.status === activeTab)
+            .filter((task) =>
+              showSnoozed ? true : !!task.snoozeTill ? false : true
+            )
+            .map((task) => (
+              <TaskComponent
+                task={task}
+                chooseTask={setChosenTask}
+                key={task.id}
+              />
+            ))}
+        </div>
+      )}
     </div>
   );
 };
