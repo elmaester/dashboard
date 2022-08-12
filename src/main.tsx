@@ -5,88 +5,13 @@ import Parse from "parse";
 import "bulma/css/bulma.css";
 import Pastebin from "./pastebin/Pastebin";
 import StreakBoard from "./StreakBoard/StreakBoard";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faBook,
-  faBottleWater,
-  faBroom,
-  faBullseye,
-  faCartShopping,
-  faCheck,
-  faCloudSun,
-  faCommentDots,
-  faDumbbell,
-  faEyeSlash,
-  faGamepad,
-  faHandSpock,
-  faHardDrive,
-  faHeadset,
-  faHeadSideMask,
-  faIceCream,
-  faLungs,
-  faMagnifyingGlass,
-  faMicrophone,
-  faNewspaper,
-  faPenToSquare,
-  faPeoplePulling,
-  faPeopleRobbery,
-  faPlus,
-  faScissors,
-  faShirt,
-  faShoePrints,
-  faShower,
-  faSpa,
-  faSpoon,
-  faTablets,
-  faThumbTack,
-  faTrash,
-  faTrophy,
-  faTv,
-  faVideo,
-} from "@fortawesome/free-solid-svg-icons";
 import Navbar from "./Navbar";
 import Login from "./authentication/Login";
 import RequireAuth from "./authentication/RequireAuth";
 import Tasks from "./Tasks/Tasks";
+import importFontAwesome from "./functions/importFontAwesome";
 
-library.add(
-  faTrophy,
-  faMagnifyingGlass,
-  faHardDrive,
-  faBook,
-  faHeadset,
-  faDumbbell,
-  faBroom,
-  faCloudSun,
-  faMicrophone,
-  faNewspaper,
-  faTv,
-  faGamepad,
-  faVideo,
-  faPeopleRobbery,
-  faShoePrints,
-  faHandSpock,
-  faScissors,
-  faHeadSideMask,
-  faShower,
-  faCartShopping,
-  faShirt,
-  faTrash,
-  faBottleWater,
-  faPenToSquare,
-  faIceCream,
-  faSpa,
-  faCommentDots,
-  faSpoon,
-  faLungs,
-  faPeoplePulling,
-  faPlus,
-  faBullseye,
-  faThumbTack,
-  faEyeSlash,
-  faCheck,
-  faTablets
-);
+importFontAwesome();
 
 Parse.initialize(
   import.meta.env.VITE_PARSE_APPLICATION_ID,

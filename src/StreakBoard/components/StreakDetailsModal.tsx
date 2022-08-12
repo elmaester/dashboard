@@ -97,7 +97,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
             <label className="label" htmlFor="streakIcon">
               Icon:
             </label>
-            <div className="control">
+            <div className="control is-flex">
               <input
                 type="text"
                 className="input"
@@ -105,6 +105,15 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
                 value={streakIcon}
                 onChange={(e) => setStreakIcon(e.target.value)}
               />
+              <a
+                href="https://fontawesome.com/search?m=free&s=solid"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="button is-info"
+              >
+                <FontAwesomeIcon icon="magnifying-glass" className="mr-2" />
+                Look up
+              </a>
             </div>
           </div>
           {/* edit type */}
