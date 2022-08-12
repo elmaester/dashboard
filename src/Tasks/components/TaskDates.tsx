@@ -17,7 +17,7 @@ const TaskDates = ({ task }: Props) => {
     if (msUntilDue < msInOneDay) {
       return " has-text-danger";
     } else if (msUntilDue < msInOneDay * 2) {
-      return " has-text-warning";
+      return " has-background-warning has-text-dark";
     } else return null;
   })();
   const createdSpan = (
