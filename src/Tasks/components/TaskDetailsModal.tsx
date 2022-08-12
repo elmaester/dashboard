@@ -3,7 +3,7 @@ import updateParseObject from "../../functions/Parse/updateParseObject";
 import ParseCollections from "../../types/ParseCollections";
 import subscribeToId from "../../functions/Parse/subscribeToId";
 import { Task } from "../../types/Task";
-import DateTimePicker from "react-datetime-picker";
+import DatePicker from "react-date-picker";
 
 interface Props {
   _task: Task;
@@ -14,8 +14,15 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
   const [task, setTask] = useState(null as Task | null);
 
   const [taskDescription, setTaskDescription] = useState(_task.description);
-  const [taskDue, setTaskDue] = useState(_task.due);
-  const [taskSnoozeTill, setTaskSnoozeTill] = useState(_task.snoozeTill);
+  const [taskDue, setTaskDue] = useState(
+    _task.due as number | null | undefined
+  );
+  const [taskSnoozeTill, setTaskSnoozeTill] = useState(
+    _task.snoozeTill as number | null | undefined
+  );
+
+  const [showDuePicker, setShowDuePicker] = useState(!!_task.due);
+  const [showSnoozePicker, setShowSnoozePicker] = useState(!!_task.snoozeTill);
 
   useEffect(() => {
     subscribeToId(_task.id, ParseCollections.Task, setTask);
@@ -51,7 +58,7 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
             aria-label="close"
           ></button>
         </header>
-        <section className="modal-card-body" style={{ minHeight: "550px" }}>
+        <section className="modal-card-body" style={{ minHeight: "350px" }}>
           {/* edit description */}
           <div className="">
             <label className="label" htmlFor="taskDescription">
@@ -69,25 +76,79 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
           </div>
           {/* edit due time */}
           <div className="mt-3">
-            <label className="label">Due:</label>
-            <DateTimePicker
-              value={taskDue ? new Date(taskDue) : new Date()}
-              onChange={(newValue) => setTaskDue(newValue.getTime())}
-              clearIcon={null}
-              maxDate={new Date()}
-              format="dd MMM y h:mma"
-            />
-          </div>
-          {/* edit snooze till */}
-          <div className="mt-3">
-            <label className="label">Snooze till: </label>
-            <DateTimePicker
-              value={taskSnoozeTill ? new Date(taskSnoozeTill) : new Date()}
-              onChange={(newValue) => setTaskSnoozeTill(newValue.getTime())}
-              clearIcon={null}
-              maxDate={new Date()}
-              format="dd MMM y h:mma"
-            />
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+              <div>
+                <label className="label">Due:</label>
+                {showDuePicker || !!taskDue ? (
+                  <div className="is-flex is-justify-content-center">
+                    <DatePicker
+                      value={taskDue ? new Date(taskDue) : new Date()}
+                      onChange={(newValue: Date) =>
+                        setTaskDue(newValue.getTime())
+                      }
+                      clearIcon={null}
+                      minDate={new Date()}
+                      format="dd MMM y"
+                    />
+                    {!!taskDue && (
+                      <button
+                        className="button is-danger ml-2"
+                        onClick={() => {
+                          setTaskDue(null);
+                          setShowDuePicker(false);
+                        }}
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <button
+                    className="button is-info"
+                    onClick={() => setShowDuePicker(true)}
+                  >
+                    Add
+                  </button>
+                )}
+              </div>
+              {/* edit snooze till */}
+              <div>
+                <label className="label">Snooze till:</label>
+                {showSnoozePicker || !!taskSnoozeTill ? (
+                  <div className="is-flex is-justify-content-center">
+                    <DatePicker
+                      value={
+                        taskSnoozeTill ? new Date(taskSnoozeTill) : new Date()
+                      }
+                      onChange={(newValue: Date) =>
+                        setTaskSnoozeTill(newValue.getTime())
+                      }
+                      clearIcon={null}
+                      minDate={new Date()}
+                      format="dd MMM y"
+                    />
+                    {!!taskSnoozeTill && (
+                      <button
+                        className="button is-danger ml-2"
+                        onClick={() => {
+                          setTaskSnoozeTill(null);
+                          setShowSnoozePicker(false);
+                        }}
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <button
+                    className="button is-info"
+                    onClick={() => setShowSnoozePicker(true)}
+                  >
+                    Add
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         </section>
         {/* footer */}
@@ -95,13 +156,10 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
           <button
             disabled={!Object.keys(getChangeObj()).length}
             className="button is-success mx-auto"
-            onClick={() =>
-              updateParseObject(
-                task.id,
-                ParseCollections.Streak,
-                getChangeObj()
-              )
-            }
+            onClick={() => {
+              updateParseObject(task.id, ParseCollections.Task, getChangeObj());
+              setShowDuePicker(false);
+            }}
           >
             Save changes
           </button>
