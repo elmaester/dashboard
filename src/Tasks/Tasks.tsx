@@ -15,10 +15,17 @@ const Tasks = () => {
   const [showSnoozed, setShowSnoozed] = useState(false);
 
   const query = new Parse.Query(ParseCollections.Task);
-  query.descending(["pinned", "createdAt"]);
+  query.descending(["pinned", "due", "createdAt"]);
 
   useEffect(() => {
-    subscribeToQuery(query, setTasks);
+    subscribeToQuery(query, (taskArr: Task[]) =>
+      setTasks(
+        taskArr.sort((a: Task, b: Task) => {
+          if (!a.due || !b.due) return 0;
+          return a.due < b.due ? -1 : 1;
+        })
+      )
+    );
   }, []);
 
   async function UIsaveTask() {
