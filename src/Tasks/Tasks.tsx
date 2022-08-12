@@ -59,26 +59,27 @@ const Tasks = () => {
       </div>
       {!!tasks.length && (
         <div>
-          {activeTab === TaskStatus.Active && (
-            <div className="is-flex my-6 ml-5">
-              <input
-                type="checkbox"
-                name="showSnoozed"
-                id="showSnoozed"
-                className="checkbox mr-2"
-                style={{ outline: "none" }}
-                checked={showSnoozed}
-                onChange={() => setShowSnoozed(!showSnoozed)}
-              />
-              <label
-                className="has-color-grey"
-                style={{ cursor: "pointer" }}
-                htmlFor="showSnoozed"
-              >
-                Show snoozed
-              </label>
-            </div>
-          )}
+          {activeTab === TaskStatus.Active &&
+            !!tasks.filter((task) => !!task.snoozeTill).length && (
+              <div className="is-flex my-6 ml-5">
+                <input
+                  type="checkbox"
+                  name="showSnoozed"
+                  id="showSnoozed"
+                  className="checkbox mr-2"
+                  style={{ outline: "none" }}
+                  checked={showSnoozed}
+                  onChange={() => setShowSnoozed(!showSnoozed)}
+                />
+                <label
+                  className="has-color-grey"
+                  style={{ cursor: "pointer" }}
+                  htmlFor="showSnoozed"
+                >
+                  Show snoozed
+                </label>
+              </div>
+            )}
           {tasks
             .filter((task) => task.status === activeTab)
             .filter((task) =>
