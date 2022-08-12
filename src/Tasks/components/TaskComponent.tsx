@@ -4,6 +4,7 @@ import deleteParseObject from "../../functions/Parse/deleteParseObject";
 import updateParseObject from "../../functions/Parse/updateParseObject";
 import ParseCollections from "../../types/ParseCollections";
 import { Task, TaskStatus } from "../../types/Task";
+import TaskDates from "./TaskDates";
 
 interface Props {
   task: Task;
@@ -50,8 +51,8 @@ const TaskComponent = ({ task, chooseTask }: Props) => {
   };
   return (
     <div className="box is-flex is-align-items-center">
-      <div className="mr-3">
-        <span
+      <div className="mr-3 has-text-left">
+        <p
           onClick={() =>
             task.status !== TaskStatus.Completed && chooseTask(task)
           }
@@ -59,13 +60,13 @@ const TaskComponent = ({ task, chooseTask }: Props) => {
           style={{
             cursor:
               task.status !== TaskStatus.Completed ? "pointer" : "default",
+            textDecoration:
+              task.status === TaskStatus.Completed ? "line-through" : "none",
           }}
         >
           {task.description}
-        </span>
-        <span className="ml-1 has-text-grey-light is-hidden-mobile">
-          (created: {task.createdAt.toDateString()})
-        </span>
+        </p>
+        <TaskDates task={task} />
       </div>
       <div className="ml-auto is-flex is-flex-wrap-nowrap">
         <FontAwesomeIcon

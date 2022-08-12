@@ -4,6 +4,7 @@ import ParseCollections from "../../types/ParseCollections";
 import subscribeToId from "../../functions/Parse/subscribeToId";
 import { Task, TaskStatus } from "../../types/Task";
 import DatePicker from "react-date-picker";
+import { getLastMidnight, getNextMidnight } from "../../functions/time";
 
 interface Props {
   _task: Task;
@@ -86,12 +87,14 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
                     {showDuePicker || !!taskDue ? (
                       <div className="is-flex is-justify-content-center">
                         <DatePicker
-                          value={taskDue ? new Date(taskDue) : new Date()}
+                          value={
+                            taskDue ? new Date(taskDue) : getLastMidnight()
+                          }
                           onChange={(newValue: Date) =>
                             setTaskDue(newValue.getTime())
                           }
                           clearIcon={null}
-                          minDate={new Date()}
+                          minDate={getLastMidnight()}
                           format="dd MMM y"
                         />
                         {!!taskDue && (
@@ -109,7 +112,10 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
                     ) : (
                       <button
                         className="button is-info"
-                        onClick={() => setShowDuePicker(true)}
+                        onClick={() => {
+                          setShowDuePicker(true);
+                          setTaskDue(getLastMidnight().getTime());
+                        }}
                       >
                         Add
                       </button>
@@ -124,13 +130,13 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
                           value={
                             taskSnoozeTill
                               ? new Date(taskSnoozeTill)
-                              : new Date()
+                              : new Date(new Date().toDateString())
                           }
                           onChange={(newValue: Date) =>
                             setTaskSnoozeTill(newValue.getTime())
                           }
                           clearIcon={null}
-                          minDate={new Date()}
+                          minDate={getNextMidnight()}
                           format="dd MMM y"
                         />
                         {!!taskSnoozeTill && (
@@ -148,7 +154,10 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
                     ) : (
                       <button
                         className="button is-info"
-                        onClick={() => setShowSnoozePicker(true)}
+                        onClick={() => {
+                          setShowSnoozePicker(true);
+                          setTaskSnoozeTill(getNextMidnight().getTime());
+                        }}
                       >
                         Add
                       </button>

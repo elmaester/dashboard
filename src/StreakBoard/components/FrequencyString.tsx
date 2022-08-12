@@ -1,4 +1,5 @@
 import prettyMilliseconds from "pretty-ms";
+import { msInOneDay } from "../../functions/time";
 import { Streak, StreakType } from "../../types/Streak";
 import { calculateAverageInterval } from "../functions/calculateDoneIntervals";
 
@@ -19,7 +20,6 @@ function FrequencyString({ streak }: Props) {
     ? Date.now() - done[done.length - 1]
     : null;
   if (!timeSinceLast) return null;
-  const msInOneDay = 86400000;
   const daysSinceLast = timeSinceLast / msInOneDay;
   let color = colors.default;
   const averageInterval = calculateAverageInterval(done);

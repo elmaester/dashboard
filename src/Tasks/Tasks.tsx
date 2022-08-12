@@ -60,7 +60,7 @@ const Tasks = () => {
       {!!tasks.length && (
         <div>
           {activeTab === TaskStatus.Active && (
-            <div className="is-flex my-6">
+            <div className="is-flex my-6 ml-5">
               <input
                 type="checkbox"
                 name="showSnoozed"
