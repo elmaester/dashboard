@@ -51,6 +51,9 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
     if (streakType !== streak.type) changeObj.type = streakType;
     if (streakIcon !== streak.icon) changeObj.icon = streakIcon;
     if (streakTarget !== streak.target) changeObj.target = streakTarget;
+    if ([StreakType.Abstain, StreakType.Log].includes(changeObj.type)) {
+      changeObj.target = null;
+    }
     if (doneTimesHaveChanged(streakDone, streak.done))
       changeObj.done = streakDone;
     return changeObj;
@@ -138,8 +141,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
             </div>
           </div>
           {/* edit target */}
-          {(streakType === StreakType.Cooldown ||
-            streakType === StreakType.Reps) && (
+          {[StreakType.Cooldown, StreakType.Reps].includes(streakType) && (
             <div className="mt-3">
               <label className="label" htmlFor="streakTarget">
                 Target:{" "}
