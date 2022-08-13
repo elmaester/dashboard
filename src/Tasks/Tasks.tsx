@@ -90,7 +90,13 @@ const Tasks = () => {
           {tasks
             .filter((task) => task.status === activeTab)
             .filter((task) =>
-              showSnoozed ? true : !!task.snoozeTill ? false : true
+              showSnoozed
+                ? true
+                : !!task.snoozeTill
+                ? Date.now() > task.snoozeTill
+                  ? true
+                  : false
+                : true
             )
             .map((task) => (
               <TaskComponent
