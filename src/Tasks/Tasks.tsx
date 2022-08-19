@@ -67,7 +67,9 @@ const Tasks = () => {
       {!!tasks.length && (
         <div>
           {activeTab === TaskStatus.Active &&
-            !!tasks.filter((task) => !!task.snoozeTill).length && (
+            tasks.some(
+              (task) => !!task.snoozeTill && task.snoozeTill > Date.now()
+            ) && (
               <div className="is-flex my-6 ml-5">
                 <input
                   type="checkbox"
