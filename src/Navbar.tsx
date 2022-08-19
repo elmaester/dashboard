@@ -20,7 +20,7 @@ const Navbar = () => {
   query.equalTo("owner", Parse.User.current()?.id);
   useEffect(() => {
     subscribeToQuery(query, (taskArr: Task[]) => setTasks(taskArr));
-  }, []);
+  }, [Parse.User.current()?.id]);
 
   const getTaskCount = () =>
     tasks.filter(
