@@ -12,5 +12,6 @@ export interface Task {
   description: string;
   due?: number;
   snoozeTill?: number;
+  completionTime?: number;
   pinned: boolean;
 }

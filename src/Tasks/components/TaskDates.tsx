@@ -43,22 +43,22 @@ const TaskDates = ({ task }: Props) => {
       {prettyMilliseconds(task.snoozeTill - Date.now(), { compact: true })}/
     </span>
   ) : null;
-  const completedSpan = (
+  const completedSpan = task.completionTime ? (
     <span
       className="has-text-success"
-      key={`${task.updatedAt}${task.description}`}
+      key={`${task.completionTime}${task.description}`}
     >
-      completed: {formatDateAsNumbers(task.updatedAt)} /
-      {prettyMilliseconds(Date.now() - task.updatedAt.getTime(), {
+      completed: {formatDateAsNumbers(task.completionTime)} /
+      {prettyMilliseconds(Date.now() - task.completionTime, {
         compact: true,
       })}
       /
     </span>
-  );
+  ) : null;
   const spansArray = [createdSpan];
   dueSpan && spansArray.push(dueSpan);
   snoozedTillSpan && spansArray.push(snoozedTillSpan);
-  task.status === TaskStatus.Completed && spansArray.push(completedSpan);
+  completedSpan && spansArray.push(completedSpan);
   return (
     <p className="has-text-grey-light">
       {spansArray.map((span, index) =>

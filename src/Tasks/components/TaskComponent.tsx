@@ -83,6 +83,8 @@ const TaskComponent = ({ task, chooseTask }: Props) => {
                   : TaskStatus.Active,
               due: null,
               snoozeTill: null,
+              completionTime:
+                task.status === TaskStatus.Completed ? null : Date.now(),
             })
           }
         />
