@@ -1,6 +1,10 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Parse from "parse";
 import ownerIsLoggedIn from "./authentication/functions/ownerIsLoggedIn";
+import { useEffect, useState } from "react";
+import { Task, TaskStatus } from "./types/Task";
+import ParseCollections from "./types/ParseCollections";
+import subscribeToQuery from "./functions/Parse/subscribeToQuery";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -10,6 +14,20 @@ const Navbar = () => {
     navigate("/login");
   }
   const navItems = ["pastebin", "streakboard", "tasks"];
+
+  const [tasks, setTasks] = useState([] as Task[]);
+  const query = new Parse.Query(ParseCollections.Task);
+  useEffect(() => {
+    subscribeToQuery(query, (taskArr: Task[]) => setTasks(taskArr));
+  }, []);
+
+  const getTaskCount = () =>
+    tasks.filter(
+      (task) =>
+        task.status === TaskStatus.Active &&
+        (!task.snoozeTill || task.snoozeTill < Date.now())
+    ).length;
+
   return ownerIsLoggedIn() ? (
     <div className="container mt-1">
       <div className="tabs is-boxed">
@@ -20,7 +38,14 @@ const Navbar = () => {
               className={location.pathname.slice(1) === item ? "is-active" : ""}
             >
               <Link to={`/${item}`}>
-                {item[0].toUpperCase() + item.slice(1)}
+                <>
+                  {item[0].toUpperCase() + item.slice(1)}
+                  {item === "tasks" && getTaskCount() > 0 && (
+                    <span className="ml-1 tag is-rounded is-danger is-light has-text-weight-bold">
+                      {getTaskCount()}
+                    </span>
+                  )}
+                </>
               </Link>
             </li>
           ))}
