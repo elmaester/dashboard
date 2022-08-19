@@ -94,7 +94,11 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
                             setTaskDue(newValue.getTime())
                           }
                           clearIcon={null}
-                          minDate={getLastMidnight()}
+                          minDate={
+                            !!task.due && task.due < Date.now()
+                              ? new Date(task.due)
+                              : getLastMidnight()
+                          }
                           format="dd MMM y"
                         />
                         {!!taskDue && (
@@ -136,7 +140,11 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
                             setTaskSnoozeTill(newValue.getTime())
                           }
                           clearIcon={null}
-                          minDate={getNextMidnight()}
+                          minDate={
+                            !!task.snoozeTill && task.snoozeTill < Date.now()
+                              ? new Date(task.snoozeTill)
+                              : getNextMidnight()
+                          }
                           format="dd MMM y"
                         />
                         {!!taskSnoozeTill && (
