@@ -15,16 +15,14 @@ const Tasks = () => {
   const [showSnoozed, setShowSnoozed] = useState(false);
 
   const query = new Parse.Query(ParseCollections.Task);
-  query.descending(["pinned", "due", "createdAt"]);
+  query.descending(["pinned", "completionTime", "due", "createdAt"]);
 
   useEffect(() => {
-    subscribeToQuery(query, (taskArr: Task[]) =>
-      setTasks(
-        taskArr.sort((a: Task, b: Task) => {
-          if (!a.due || !b.due) return 0;
-          return a.due < b.due ? -1 : 1;
-        })
-      )
+    subscribeToQuery(query, setTasks, (taskArr: Task[]) =>
+      taskArr.sort((a: Task, b: Task) => {
+        if (!a.due || !b.due || a.due === b.due) return 0;
+        return a.due < b.due ? -1 : 1;
+      })
     );
   }, []);
 
