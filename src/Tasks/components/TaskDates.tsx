@@ -21,24 +21,33 @@ const TaskDates = ({ task }: Props) => {
     } else return null;
   })();
   const createdSpan = (
-    <span>
+    <span key={`${task.createdAt}${task.description}`}>
       created: {formatDateAsNumbers(task.createdAt)} /{createdAgo}/
     </span>
   );
   const dueSpan = !!task.due ? (
-    <span className={`has-text-weight-bold has-text-default${dueInColorClass}`}>
+    <span
+      className={`has-text-weight-bold has-text-default${dueInColorClass}`}
+      key={`${task.due}${task.description}`}
+    >
       due: {formatDateAsNumbers(task.due)} /
       {prettyMilliseconds(task.due - Date.now(), { compact: true })}/
     </span>
   ) : null;
   const snoozedTillSpan = !!task.snoozeTill ? (
-    <span className="has-text-weight-medium has-text-info">
+    <span
+      className="has-text-weight-medium has-text-info"
+      key={`${task.snoozeTill}${task.description}`}
+    >
       snooze: {formatDateAsNumbers(task.snoozeTill)} /
       {prettyMilliseconds(task.snoozeTill - Date.now(), { compact: true })}/
     </span>
   ) : null;
   const completedSpan = (
-    <span className="has-text-success">
+    <span
+      className="has-text-success"
+      key={`${task.updatedAt}${task.description}`}
+    >
       completed: {formatDateAsNumbers(task.updatedAt)} /
       {prettyMilliseconds(Date.now() - task.updatedAt.getTime(), {
         compact: true,
@@ -54,10 +63,10 @@ const TaskDates = ({ task }: Props) => {
     <p className="has-text-grey-light">
       {spansArray.map((span, index) =>
         index > 0 ? (
-          <>
+          <span key={index}>
             {", "}
             {span}
-          </>
+          </span>
         ) : (
           span
         )
