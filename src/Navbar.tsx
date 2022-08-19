@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Parse from "parse";
-import ownerIsLoggedIn from "./authentication/functions/ownerIsLoggedIn";
+import userIsLoggedIn from "./authentication/functions/userIsLoggedIn";
 import { useEffect, useState } from "react";
 import { Task, TaskStatus } from "./types/Task";
 import ParseCollections from "./types/ParseCollections";
@@ -17,6 +17,7 @@ const Navbar = () => {
 
   const [tasks, setTasks] = useState([] as Task[]);
   const query = new Parse.Query(ParseCollections.Task);
+  query.equalTo("owner", Parse.User.current()?.id);
   useEffect(() => {
     subscribeToQuery(query, (taskArr: Task[]) => setTasks(taskArr));
   }, []);
@@ -28,7 +29,7 @@ const Navbar = () => {
         (!task.snoozeTill || task.snoozeTill < Date.now())
     ).length;
 
-  return ownerIsLoggedIn() ? (
+  return userIsLoggedIn() ? (
     <div className="container mt-1">
       <div className="tabs is-boxed">
         <ul>

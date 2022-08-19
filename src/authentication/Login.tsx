@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Parse from "parse";
 import { useNavigate } from "react-router-dom";
-import ownerIsLoggedIn from "./functions/ownerIsLoggedIn";
+import userIsLoggedIn from "./functions/userIsLoggedIn";
 
 function Login() {
-  const userName = import.meta.env.VITE_PARSE_OWNER_USER_NAME;
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -14,14 +14,29 @@ function Login() {
     } catch (e: any) {
       setMessage(e.message);
     } finally {
+      setUserName("");
       setPassword("");
-      if (ownerIsLoggedIn()) navigate("/pastebin");
+      if (userIsLoggedIn()) navigate("/pastebin");
     }
   };
   return (
     <div className="container mt-6">
+      <label htmlFor="userName" className="label">
+        Username
+      </label>
       <input
+        id="userName"
         autoFocus
+        type="text"
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
+        className="input"
+      />
+      <label htmlFor="password" className="label">
+        Password
+      </label>
+      <input
+        id="password"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}

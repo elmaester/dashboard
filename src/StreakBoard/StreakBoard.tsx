@@ -24,6 +24,7 @@ const StreakBoard = () => {
   }
 
   const query = new Parse.Query(ParseCollections.Streak);
+  query.equalTo("owner", Parse.User.current()?.id);
   query.ascending("createdAt");
 
   useEffect(() => {

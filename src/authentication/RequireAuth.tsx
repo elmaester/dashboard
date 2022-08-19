@@ -1,9 +1,9 @@
 import { Navigate, useLocation } from "react-router-dom";
-import ownerIsLoggedIn from "./functions/ownerIsLoggedIn";
+import userIsLoggedIn from "./functions/userIsLoggedIn";
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   const location = useLocation();
-  if (!ownerIsLoggedIn()) {
+  if (!userIsLoggedIn()) {
     return <Navigate to="/login" replace />;
   }
   return children;

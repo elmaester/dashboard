@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Parse from "parse";
 import "bulma/css/bulma.css";
 import Pastebin from "./pastebin/Pastebin";
@@ -10,6 +10,7 @@ import Login from "./authentication/Login";
 import RequireAuth from "./authentication/RequireAuth";
 import Tasks from "./Tasks/Tasks";
 import importFontAwesome from "./functions/importFontAwesome";
+import userIsLoggedIn from "./authentication/functions/userIsLoggedIn";
 
 importFontAwesome();
 
@@ -50,6 +51,12 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             }
           />
           <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <Navigate to={userIsLoggedIn() ? "/pastebin" : "/login"} />
+            }
+          />
         </Routes>
       </>
     </BrowserRouter>

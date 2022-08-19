@@ -15,6 +15,7 @@ const Tasks = () => {
   const [showSnoozed, setShowSnoozed] = useState(false);
 
   const query = new Parse.Query(ParseCollections.Task);
+  query.equalTo("owner", Parse.User.current()?.id);
   query.descending(["pinned", "completionTime", "due", "createdAt"]);
 
   useEffect(() => {

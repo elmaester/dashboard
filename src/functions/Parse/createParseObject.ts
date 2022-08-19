@@ -9,6 +9,7 @@ async function createParseObject(
   const collectionReference = Parse.Object.extend(collection);
   const newlyCreatedParseObject = new collectionReference();
   setAttributesOnParseObject(newlyCreatedParseObject, attributesObj);
+  newlyCreatedParseObject.set("owner", Parse.User.current()?.id);
   newlyCreatedParseObject.save();
 }
 

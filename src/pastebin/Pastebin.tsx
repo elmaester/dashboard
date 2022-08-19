@@ -18,6 +18,7 @@ const Pastebin = () => {
   }
 
   const query = new Parse.Query(ParseCollections.Snippet);
+  query.equalTo("owner", Parse.User.current()?.id);
   query.descending("createdAt");
 
   useEffect(() => {
