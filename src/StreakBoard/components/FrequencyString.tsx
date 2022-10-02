@@ -61,7 +61,9 @@ function FrequencyString({ streak }: Props) {
   }
   if (type === StreakType.Abstain && done.length > 1) {
     part2 = `/${Math.round(averageIntervalDays)}`;
-    if (timeSinceLast / averageInterval < 0.8) {
+    if (timeSinceLast > msInOneDay * 30) {
+      color = colors.green;
+    } else if (timeSinceLast / averageInterval < 0.8) {
       color = colors.red;
     } else if (timeSinceLast / averageInterval <= 2) {
       color = colors.yellow;
