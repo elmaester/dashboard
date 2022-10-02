@@ -67,7 +67,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
       <div className="modal-background" onClick={() => chooseStreak(null)} />
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">{streak.name}</p>
+          <p className="modal-card-title">Edit Streak</p>
           <button
             className="delete"
             onClick={() => chooseStreak(null)}

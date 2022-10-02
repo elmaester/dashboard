@@ -36,7 +36,7 @@ const Tasks = () => {
   }
   return (
     <div
-      className="container mt-6 has-text-centered"
+      className="container mt-6 px-2 has-text-centered"
       style={{ maxWidth: "800px" }}
     >
       {!!chosenTask && (

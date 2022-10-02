@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { Task, TaskStatus } from "./types/Task";
 import ParseCollections from "./types/ParseCollections";
 import subscribeToQuery from "./functions/Parse/subscribeToQuery";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -13,7 +15,11 @@ const Navbar = () => {
     await Parse.User.logOut();
     navigate("/login");
   }
-  const navItems = ["pastebin", "streakboard", "tasks"];
+  const navItems = [
+    { name: "pastebin", icon: "quote-left" },
+    { name: "streakboard", icon: "table-columns" },
+    { name: "tasks", icon: "list-check" },
+  ];
 
   const [tasks, setTasks] = useState([] as Task[]);
   const query = new Parse.Query(ParseCollections.Task);
@@ -30,18 +36,23 @@ const Navbar = () => {
     ).length;
 
   return userIsLoggedIn() ? (
-    <div className="container mt-1">
+    <div className="container mt-1 px-2">
       <div className="tabs is-boxed">
         <ul>
           {navItems.map((item) => (
             <li
-              key={item}
-              className={location.pathname.slice(1) === item ? "is-active" : ""}
+              key={item.name}
+              className={
+                location.pathname.slice(1) === item.name ? "is-active" : ""
+              }
             >
-              <Link to={`/${item}`}>
+              <Link to={`/${item.name}`}>
                 <>
-                  {item[0].toUpperCase() + item.slice(1)}
-                  {item === "tasks" && getTaskCount() > 0 && (
+                  <FontAwesomeIcon icon={item.icon as IconProp} />
+                  <span className="ml-2 is-hidden-mobile">
+                    {item.name[0].toUpperCase() + item.name.slice(1)}
+                  </span>
+                  {item.name === "tasks" && getTaskCount() > 0 && (
                     <span className="ml-1 tag is-rounded is-danger is-light has-text-weight-bold">
                       {getTaskCount()}
                     </span>
@@ -51,10 +62,11 @@ const Navbar = () => {
             </li>
           ))}
           <button
-            className="button is-light is-danger ml-auto mr-1"
+            className="button is-light is-danger ml-auto"
             onClick={logOut}
           >
-            Log Out
+            <FontAwesomeIcon icon="right-from-bracket" />
+            <span className="ml-2 is-hidden-mobile">Log Out</span>
           </button>
         </ul>
       </div>

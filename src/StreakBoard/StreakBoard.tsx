@@ -39,12 +39,12 @@ const StreakBoard = () => {
     subscribeToQuery(query, setStreaks, sortStreaksByType);
   }, []);
   return (
-    <div className="container">
+    <div className="container px-2">
       {!!chosenStreak && (
         <StreakDetails _streak={chosenStreak} chooseStreak={setChosenStreak} />
       )}
       <div className="block mt-5">
-        <label htmlFor="hide-sensitive" className="checkbox">
+        <label htmlFor="hide-sensitive" className="checkbox ml-2">
           <input
             type="checkbox"
             name="hide-sensitive"

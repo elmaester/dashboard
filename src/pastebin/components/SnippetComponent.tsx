@@ -34,7 +34,7 @@ const SnippetComponent = ({ snippet }: Props) => {
     setNewText(text);
   }
   return (
-    <div className="card m-2">
+    <div className="card my-2">
       <div className="card-header p-3 has-background-dark">
         <span className="card-title has-text-white has-text-weight-bold mx-auto">
           {dateString}
