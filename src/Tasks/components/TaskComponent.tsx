@@ -78,9 +78,9 @@ const TaskComponent = ({ task, chooseTask }: Props) => {
           onClick={() =>
             updateParseObject(task.id, ParseCollections.Task, {
               status:
-                task.status === TaskStatus.Active
-                  ? TaskStatus.Completed
-                  : TaskStatus.Active,
+                task.status === TaskStatus.Completed
+                  ? TaskStatus.Active
+                  : TaskStatus.Completed,
               due: null,
               snoozeTill: null,
               completionTime:
