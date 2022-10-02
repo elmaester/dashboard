@@ -24,6 +24,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
 
   const [streakName, setStreakName] = useState(_streak.name);
   const [streakType, setStreakType] = useState(_streak.type);
+  const [streakSensitive, setStreakSensitive] = useState(_streak.sensitive);
   const [streakIcon, setStreakIcon] = useState(_streak.icon);
   const [streakTarget, setStreakTarget] = useState(_streak.target);
   const [streakDone, setStreakDone] = useState(_streak.done);
@@ -41,6 +42,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
       setStreakIcon(streak.icon);
       setStreakTarget(streak.target);
       setStreakDone(streak.done);
+      setStreakSensitive(streak.sensitive);
     }
   }, [streak]);
 
@@ -49,6 +51,8 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
     const changeObj: any = {};
     if (streakName !== streak.name) changeObj.name = streakName;
     if (streakType !== streak.type) changeObj.type = streakType;
+    if (streakSensitive !== streak.sensitive)
+      changeObj.sensitive = streakSensitive;
     if (streakIcon !== streak.icon) changeObj.icon = streakIcon;
     if (streakTarget !== streak.target) changeObj.target = streakTarget;
     if ([StreakType.Abstain, StreakType.Log].includes(changeObj.type)) {
@@ -139,6 +143,20 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
                 </select>
               </div>
             </div>
+          </div>
+          {/* edit sensitivity */}
+          <div className="mt-3">
+            <label className="label checkbox" htmlFor="sensitive">
+              Sensitive:
+              <input
+                type="checkbox"
+                name="sensitive"
+                id="sensitive"
+                checked={streakSensitive}
+                onChange={() => setStreakSensitive(!streakSensitive)}
+                className="ml-2"
+              />
+            </label>
           </div>
           {/* edit target */}
           {[StreakType.Cooldown, StreakType.Reps].includes(streakType) && (

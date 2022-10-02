@@ -10,6 +10,7 @@ interface Props {
   streakTypeArray: Streak[];
   streakType: StreakType;
   chooseStreak: Function;
+  hideSensitive: boolean;
 }
 
 const StreakTypeComponent = ({
@@ -17,6 +18,7 @@ const StreakTypeComponent = ({
   streakType,
   streakTypeArray,
   chooseStreak,
+  hideSensitive,
 }: Props) => (
   <div className="column">
     <div className="card">
@@ -38,7 +40,10 @@ const StreakTypeComponent = ({
         </h2>
       </div>
       <ul className="card-content mx-auto">
-        {streakTypeArray.map((streak: Streak) => (
+        {(hideSensitive
+          ? streakTypeArray.filter((streak) => !streak.sensitive)
+          : streakTypeArray
+        ).map((streak: Streak) => (
           <StreakComponent
             key={streak.id}
             streak={streak}
