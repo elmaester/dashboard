@@ -20,7 +20,7 @@ function Login() {
     }
   };
   return (
-    <div className="container mt-6">
+    <div className="container mt-6 px-4" style={{ maxWidth: "500px" }}>
       <label htmlFor="userName" className="label">
         Username
       </label>
@@ -32,7 +32,7 @@ function Login() {
         onChange={(e) => setUserName(e.target.value)}
         className="input"
       />
-      <label htmlFor="password" className="label">
+      <label htmlFor="password" className="label mt-2">
         Password
       </label>
       <input
