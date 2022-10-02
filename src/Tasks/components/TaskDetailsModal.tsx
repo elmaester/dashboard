@@ -79,10 +79,8 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
             <div>
               {/* edit due time */}
               <div className="mt-3">
-                <div
-                  style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
-                >
-                  <div>
+                <div className="columns">
+                  <div className="column">
                     <label className="label">Due:</label>
                     {showDuePicker || !!taskDue ? (
                       <div className="is-flex is-justify-content-center">
@@ -126,7 +124,7 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
                     )}
                   </div>
                   {/* edit snooze till */}
-                  <div>
+                  <div className="column">
                     <label className="label">Snooze till:</label>
                     {showSnoozePicker || !!taskSnoozeTill ? (
                       <div className="is-flex is-justify-content-center">
