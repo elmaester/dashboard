@@ -52,7 +52,7 @@ const TaskDetails = ({ _task, chooseTask }: Props) => {
       <div className="modal-background" onClick={() => chooseTask(null)} />
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">{task.description}</p>
+          <p className="modal-card-title">Edit Task</p>
           <button
             className="delete"
             onClick={() => chooseTask(null)}
