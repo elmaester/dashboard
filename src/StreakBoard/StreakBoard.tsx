@@ -10,11 +10,21 @@ const StreakBoard = () => {
   const [streaks, setStreaks] = useState({} as SortedStreaksObject);
   const [chosenStreak, setChosenStreak] = useState(null);
   const [hideSensitive, setHideSensitive] = useState(true);
+  const [showArchived, setShowArchived] = useState(false);
+  const [showReps, setShowReps] = useState(false);
 
   useEffect(() => {
     const localStorageHideSensitive = localStorage.getItem("hideSensitive");
     if (localStorageHideSensitive) {
       setHideSensitive(JSON.parse(localStorageHideSensitive));
+    }
+    const localStorageShowArchived = localStorage.getItem("showArchived");
+    if (localStorageShowArchived) {
+      setShowArchived(JSON.parse(localStorageShowArchived));
+    }
+    const localStorageShowReps = localStorage.getItem("showReps");
+    if (localStorageShowReps) {
+      setShowReps(JSON.parse(localStorageShowReps));
     }
   }, []);
 
@@ -61,6 +71,37 @@ const StreakBoard = () => {
           />
           Hide sensitive
         </label>
+        <label htmlFor="show-archived" className="checkbox ml-4">
+          <input
+            type="checkbox"
+            name="show-archived"
+            id="show-archived"
+            checked={showArchived}
+            onChange={() => {
+              localStorage.setItem(
+                "showArchived",
+                JSON.stringify(!showArchived)
+              );
+              setShowArchived(!showArchived);
+            }}
+            className="mr-2"
+          />
+          Show archived
+        </label>
+        <label htmlFor="show-reps" className="checkbox ml-4">
+          <input
+            type="checkbox"
+            name="show-reps"
+            id="show-reps"
+            checked={showReps}
+            onChange={() => {
+              localStorage.setItem("showReps", JSON.stringify(!showReps));
+              setShowReps(!showReps);
+            }}
+            className="mr-2"
+          />
+          Show reps
+        </label>
       </div>
       {!!Object.keys(streaks).length && (
         <div className="columns mx-0">
@@ -70,6 +111,7 @@ const StreakBoard = () => {
             streakType={StreakType.Log}
             chooseStreak={setChosenStreak}
             hideSensitive={hideSensitive}
+            showArchived={showArchived}
           />
           <StreakTypeComponent
             name="Do this regularly"
@@ -77,20 +119,25 @@ const StreakBoard = () => {
             streakType={StreakType.Cooldown}
             chooseStreak={setChosenStreak}
             hideSensitive={hideSensitive}
+            showArchived={showArchived}
           />
-          <StreakTypeComponent
-            name="Practice X times"
-            streakTypeArray={streaks.reps}
-            streakType={StreakType.Reps}
-            chooseStreak={setChosenStreak}
-            hideSensitive={hideSensitive}
-          />
+          {showReps && (
+            <StreakTypeComponent
+              name="Practice X times"
+              streakTypeArray={streaks.reps}
+              streakType={StreakType.Reps}
+              chooseStreak={setChosenStreak}
+              hideSensitive={hideSensitive}
+              showArchived={showArchived}
+            />
+          )}
           <StreakTypeComponent
             name="Abstain from"
             streakTypeArray={streaks.abstain}
             streakType={StreakType.Abstain}
             chooseStreak={setChosenStreak}
             hideSensitive={hideSensitive}
+            showArchived={showArchived}
           />
         </div>
       )}

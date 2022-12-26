@@ -25,6 +25,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
   const [streakName, setStreakName] = useState(_streak.name);
   const [streakType, setStreakType] = useState(_streak.type);
   const [streakSensitive, setStreakSensitive] = useState(_streak.sensitive);
+  const [streakArchived, setStreakArchived] = useState(_streak.archived);
   const [streakIcon, setStreakIcon] = useState(_streak.icon);
   const [streakTarget, setStreakTarget] = useState(_streak.target);
   const [streakDone, setStreakDone] = useState(_streak.done);
@@ -43,6 +44,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
       setStreakTarget(streak.target);
       setStreakDone(streak.done);
       setStreakSensitive(streak.sensitive);
+      setStreakArchived(streak.archived);
     }
   }, [streak]);
 
@@ -53,6 +55,7 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
     if (streakType !== streak.type) changeObj.type = streakType;
     if (streakSensitive !== streak.sensitive)
       changeObj.sensitive = streakSensitive;
+    if (streakArchived !== streak.archived) changeObj.archived = streakArchived;
     if (streakIcon !== streak.icon) changeObj.icon = streakIcon;
     if (streakTarget !== streak.target) changeObj.target = streakTarget;
     if ([StreakType.Abstain, StreakType.Log].includes(changeObj.type)) {
@@ -144,8 +147,8 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
               </div>
             </div>
           </div>
-          {/* edit sensitivity */}
-          <div className="mt-3">
+          {/* edit sensitivity and archived status */}
+          <div className="mt-3 is-flex">
             <label className="label checkbox" htmlFor="sensitive">
               Sensitive:
               <input
@@ -154,6 +157,17 @@ const StreakDetails = ({ _streak, chooseStreak }: Props) => {
                 id="sensitive"
                 checked={streakSensitive}
                 onChange={() => setStreakSensitive(!streakSensitive)}
+                className="ml-2"
+              />
+            </label>
+            <label className="label checkbox ml-2" htmlFor="archived">
+              Archived:
+              <input
+                type="checkbox"
+                name="archived"
+                id="archived"
+                checked={streakArchived}
+                onChange={() => setStreakArchived(!streakArchived)}
                 className="ml-2"
               />
             </label>

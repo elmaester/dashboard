@@ -15,6 +15,7 @@ export interface Streak {
   type: StreakType;
   target?: number;
   sensitive: boolean;
+  archived: boolean;
 }
 
 export interface SortedStreaksObject {

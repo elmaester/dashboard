@@ -28,7 +28,11 @@ const StreakComponent = ({ streak, chooseStreak }: Props) => {
         style={{ cursor: "pointer" }}
         icon={icon as IconProp}
       />
-      <span onClick={() => chooseStreak(streak)} style={{ cursor: "pointer" }}>
+      <span
+        onClick={() => chooseStreak(streak)}
+        style={{ cursor: "pointer" }}
+        className={streak.archived ? "has-text-grey-light" : ""}
+      >
         {name}
       </span>
       <FrequencyString streak={streak} />

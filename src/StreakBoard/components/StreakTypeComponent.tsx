@@ -11,6 +11,7 @@ interface Props {
   streakType: StreakType;
   chooseStreak: Function;
   hideSensitive: boolean;
+  showArchived: boolean;
 }
 
 const StreakTypeComponent = ({
@@ -19,39 +20,48 @@ const StreakTypeComponent = ({
   streakTypeArray,
   chooseStreak,
   hideSensitive,
-}: Props) => (
-  <div className="column">
-    <div className="card">
-      <div className="card-header has-background-dark">
-        <h2 className="card-header-title has-text-white">
-          {name}
-          <FontAwesomeIcon
-            onClick={() =>
-              createParseObject(ParseCollections.Streak, {
-                type: streakType,
-                name: "New Streak",
-                icon: "bullseye",
-              })
-            }
-            className={`icon ml-auto`}
-            style={{ cursor: "pointer" }}
-            icon={"plus" as IconProp}
-          />
-        </h2>
+  showArchived,
+}: Props) => {
+  let filteredStreakType = [...streakTypeArray];
+  if (hideSensitive)
+    filteredStreakType = filteredStreakType.filter(
+      (streak) => !streak.sensitive
+    );
+  if (!showArchived)
+    filteredStreakType = filteredStreakType.filter(
+      (streak) => !streak.archived
+    );
+  return (
+    <div className="column">
+      <div className="card">
+        <div className="card-header has-background-dark">
+          <h2 className="card-header-title has-text-white">
+            {name}
+            <FontAwesomeIcon
+              onClick={() =>
+                createParseObject(ParseCollections.Streak, {
+                  type: streakType,
+                  name: "New Streak",
+                  icon: "bullseye",
+                })
+              }
+              className={`icon ml-auto`}
+              style={{ cursor: "pointer" }}
+              icon={"plus" as IconProp}
+            />
+          </h2>
+        </div>
+        <ul className="card-content mx-auto">
+          {filteredStreakType.map((streak: Streak) => (
+            <StreakComponent
+              key={streak.id}
+              streak={streak}
+              chooseStreak={chooseStreak}
+            />
+          ))}
+        </ul>
       </div>
-      <ul className="card-content mx-auto">
-        {(hideSensitive
-          ? streakTypeArray.filter((streak) => !streak.sensitive)
-          : streakTypeArray
-        ).map((streak: Streak) => (
-          <StreakComponent
-            key={streak.id}
-            streak={streak}
-            chooseStreak={chooseStreak}
-          />
-        ))}
-      </ul>
     </div>
-  </div>
-);
+  );
+};
 export default StreakTypeComponent;
