@@ -11,7 +11,6 @@ const StreakBoard = () => {
   const [chosenStreak, setChosenStreak] = useState(null);
   const [hideSensitive, setHideSensitive] = useState(true);
   const [showArchived, setShowArchived] = useState(false);
-  const [showReps, setShowReps] = useState(false);
 
   useEffect(() => {
     const localStorageHideSensitive = localStorage.getItem("hideSensitive");
@@ -21,10 +20,6 @@ const StreakBoard = () => {
     const localStorageShowArchived = localStorage.getItem("showArchived");
     if (localStorageShowArchived) {
       setShowArchived(JSON.parse(localStorageShowArchived));
-    }
-    const localStorageShowReps = localStorage.getItem("showReps");
-    if (localStorageShowReps) {
-      setShowReps(JSON.parse(localStorageShowReps));
     }
   }, []);
 
@@ -88,20 +83,6 @@ const StreakBoard = () => {
           />
           Show archived
         </label>
-        <label htmlFor="show-reps" className="checkbox ml-4">
-          <input
-            type="checkbox"
-            name="show-reps"
-            id="show-reps"
-            checked={showReps}
-            onChange={() => {
-              localStorage.setItem("showReps", JSON.stringify(!showReps));
-              setShowReps(!showReps);
-            }}
-            className="mr-2"
-          />
-          Show reps
-        </label>
       </div>
       {!!Object.keys(streaks).length && (
         <div className="columns mx-0">
@@ -121,16 +102,14 @@ const StreakBoard = () => {
             hideSensitive={hideSensitive}
             showArchived={showArchived}
           />
-          {showReps && (
-            <StreakTypeComponent
-              name="Practice X times"
-              streakTypeArray={streaks.reps}
-              streakType={StreakType.Reps}
-              chooseStreak={setChosenStreak}
-              hideSensitive={hideSensitive}
-              showArchived={showArchived}
-            />
-          )}
+          <StreakTypeComponent
+            name="Practice X times"
+            streakTypeArray={streaks.reps}
+            streakType={StreakType.Reps}
+            chooseStreak={setChosenStreak}
+            hideSensitive={hideSensitive}
+            showArchived={showArchived}
+          />
           <StreakTypeComponent
             name="Abstain from"
             streakTypeArray={streaks.abstain}
